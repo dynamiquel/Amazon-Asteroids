@@ -15,11 +15,10 @@
     return newAsteroids;
 }
 
-static int px = 200;
-static int py = 300;
+Object* ship = new Object{{200, 300}, {40, 40}};
 static int moveVelocity = 5;
 static std::list<Object> shots;
-static std::list<Object> asteroids = { Object{ {200, 200} } };
+static std::list<Object> asteroids = { Object{ {200, 200}, {250, 250} } };
 
 void Asteroids::Update(float deltatime)
 {
@@ -27,19 +26,19 @@ void Asteroids::Update(float deltatime)
 
     if (keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_KP_4] || keystate[SDL_SCANCODE_A])
     {
-        px -= moveVelocity;
+        ship->position.x -= moveVelocity;
     }
     if (keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_KP_6] || keystate[SDL_SCANCODE_D])
     {
-        px += moveVelocity;
+        ship->position.x += moveVelocity;
     }
     if (keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_KP_8] || keystate[SDL_SCANCODE_W])
     {
-        py -= moveVelocity;
+        ship->position.y -= moveVelocity;
     }
     if (keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_KP_5] || keystate[SDL_SCANCODE_S])
     {
-        py += moveVelocity;
+        ship->position.y += moveVelocity;
     }
     if (keystate[SDL_SCANCODE_KP_7] || keystate[SDL_SCANCODE_Q])
     {
@@ -54,7 +53,7 @@ void Asteroids::Update(float deltatime)
     {
         if ((fireDelayTimer += deltatime) >= fireDelay)
         {
-            shots.push_back(Object{ {px, py} });
+            shots.push_back(Object{ {ship->position.x, ship->position.y}, {28, 31}});
             fireDelayTimer = 0.0f;
         }
     }
@@ -86,7 +85,7 @@ void Asteroids::Update(float deltatime)
 void Asteroids::Draw()
 {
     drawer->DrawImageCached("bg.png", 0, 0);
-    drawer->DrawImageCached("ship.png", px - 20, py - 20);
+    drawer->DrawImageCached("ship.png", ship->position.x, ship->position.y);
 
     for (Object& asteroid : asteroids)
     {
@@ -94,7 +93,7 @@ void Asteroids::Draw()
     }
     for (Object& shot : shots)
     {
-        drawer->DrawImageCached("shot.png", shot.position.x - 14, shot.position.y - 16);
+        drawer->DrawImageCached("shot.png", shot.position.x, shot.position.y);
     }
     //drawer->DrawText("arial.ttf", "Score: 0", 40, 20, 50);
 }

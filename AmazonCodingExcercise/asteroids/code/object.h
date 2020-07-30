@@ -11,6 +11,7 @@ class Object
 
         // Position starts from top-left to bottom-right.
         Vector2Int position;
+        // Solely for hitbox calculations.
         Vector2Int size;
         float rotation;
 };
