@@ -12,8 +12,6 @@
 #include <stb_image.h>
 #include <stbttf.h>
 
-#include <SDL.h>
-
 static SDL_Surface* CreateImageSurface(const char* img)
 {
     int req_format = STBI_rgb_alpha;

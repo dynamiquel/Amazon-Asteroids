@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     Drawer* drawer = Drawer::Create(window, renderer);
     Asteroids* asteroids = Asteroids::Create(drawer);
 
