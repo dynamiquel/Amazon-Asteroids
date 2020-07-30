@@ -49,6 +49,7 @@ static SDL_Surface* CreateImageSurface(const char* img)
     Drawer* newDrawer = new Drawer();
     newDrawer->m_window = window;
     newDrawer->m_renderer = renderer;
+    newDrawer->textures = new Textures();
     return newDrawer;
 }
 
@@ -80,6 +81,50 @@ bool Drawer::DrawImage(const char* img, int posX, int posY)
     else
     {
         return false;
+    }
+}
+
+void Drawer::DrawImageCached(const char* img, int posX, int posY)
+{
+    SDL_Texture* texture = textures->GetTexture(img);
+
+    if (texture == nullptr)
+    {
+        texture = GetTexture(img);
+
+        if (!texture)
+            return;
+
+        textures->AddTexture(img, texture);
+    }
+
+    int width;
+    int height;
+    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+
+    SDL_Rect posRect;
+    posRect.x = posX;
+    posRect.y = posY;
+    posRect.w = width;
+    posRect.h = height;
+
+    SDL_RenderCopy(m_renderer, texture, NULL, &posRect);
+}
+
+SDL_Texture* Drawer::GetTexture(const char* img)
+{
+    SDL_Surface* surface = CreateImageSurface(img);
+    if (surface)
+    {
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+        SDL_FreeSurface(surface);
+
+        return texture;
+    }
+    else
+    {
+        SDL_Log("Error loading image: %s", img);
+        return nullptr;
     }
 }
 

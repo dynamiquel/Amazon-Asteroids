@@ -75,15 +75,16 @@ void Asteroids::Update(float deltatime)
 
 void Asteroids::Draw()
 {
-    drawer->DrawImage("bg.png", 0, 0);
-    drawer->DrawImage("ship.png", px - 20, py - 20);
+    drawer->DrawImageCached("bg.png", 0, 0);
+    drawer->DrawImageCached("ship.png", px - 20, py - 20);
+
     for (Position asteroid : asteroids)
     {
-        drawer->DrawImage("asteroid.png", asteroid.x - 100, asteroid.y - 100);
+        drawer->DrawImageCached("asteroid.png", asteroid.x - 100, asteroid.y - 100);
     }
     for (Position shot : shots)
     {
-        drawer->DrawImage("shot.png", shot.x - 14, shot.y - 16);
+        drawer->DrawImageCached("shot.png", shot.x - 14, shot.y - 16);
     }
-    drawer->DrawText("arial.ttf", "Score: 0", 40, 20, 50);
+    //drawer->DrawText("arial.ttf", "Score: 0", 40, 20, 50);
 }

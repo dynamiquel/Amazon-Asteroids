@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
         lastFrame = currentFrame;
 
         SDL_RenderPresent(renderer);
-        SDL_Delay(1);
+        SDL_Delay(1000 / 200);
     }
 
     SDL_DestroyWindow(window);
