@@ -12,6 +12,7 @@ class Drawer
 {
 public:
     static Drawer* Create(SDL_Window* window, SDL_Renderer* renderer);
+    ~Drawer();
 
     bool DrawImage(const char* imagePath, int posX = 0, int posY = 0);
     void DrawImageCached(const char* img, int posX, int posY);

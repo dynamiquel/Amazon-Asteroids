@@ -21,6 +21,7 @@ file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "S:/Users/Liamk/Development/Ga
 set(OLD_GLOB
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/asteroids.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/drawer.h"
+  "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/object.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/texture_instance.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/textures.h"
   )

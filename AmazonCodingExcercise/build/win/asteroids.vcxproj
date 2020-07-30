@@ -266,6 +266,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\drawer.cpp" />
     <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\drawer.h" />
     <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\main.cpp" />
+    <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\object.h" />
     <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\texture_instance.cpp" />
     <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\texture_instance.h" />
     <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\textures.cpp" />

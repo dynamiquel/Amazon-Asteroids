@@ -3,11 +3,10 @@
 // is not representative of Amazon coding standards or Amazon best practices.
 
 #include "asteroids.h"
-
 #include <SDL.h>
 #include <list>
-
 #include "drawer.h"
+#include "object.h"
 
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
@@ -16,52 +15,63 @@
     return newAsteroids;
 }
 
-struct Position
-{
-    int x;
-    int y;
-};
-
 static int px = 200;
 static int py = 300;
-static std::list<Position> shots;
-static std::list<Position> asteroids = { Position{ 200, 100 } };
+static int moveVelocity = 5;
+static std::list<Object> shots;
+static std::list<Object> asteroids = { Object{ {200, 200} } };
 
 void Asteroids::Update(float deltatime)
 {
     const Uint8* keystate = SDL_GetKeyboardState(nullptr);
-    if (keystate[SDL_SCANCODE_LEFT])
+
+    if (keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_KP_4] || keystate[SDL_SCANCODE_A])
     {
-        px -= 5;
+        px -= moveVelocity;
     }
-    if (keystate[SDL_SCANCODE_RIGHT])
+    if (keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_KP_6] || keystate[SDL_SCANCODE_D])
     {
-        px += 5;
+        px += moveVelocity;
     }
-    if (keystate[SDL_SCANCODE_UP])
+    if (keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_KP_8] || keystate[SDL_SCANCODE_W])
     {
-        py -= 5;
+        py -= moveVelocity;
     }
-    if (keystate[SDL_SCANCODE_DOWN])
+    if (keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_KP_5] || keystate[SDL_SCANCODE_S])
     {
-        py += 5;
+        py += moveVelocity;
+    }
+    if (keystate[SDL_SCANCODE_KP_7] || keystate[SDL_SCANCODE_Q])
+    {
+        // Rotate left.
+    }
+    if (keystate[SDL_SCANCODE_KP_9] || keystate[SDL_SCANCODE_E])
+    {
+        // Rotate right.
     }
 
-    if (keystate[SDL_SCANCODE_SPACE])
+    if (keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_KP_0])
     {
-        shots.push_back(Position{ px, py });
-    }
-
-    for (Position& shot : shots)
-    {
-        shot.y -= 1;
-    }
-
-    for (Position shot : shots)
-    {
-        for (std::list<Position>::iterator itr = asteroids.begin(); itr != asteroids.end(); )
+        if ((fireDelayTimer += deltatime) >= fireDelay)
         {
-            if (shot.x == itr->x && shot.y == itr->y)
+            shots.push_back(Object{ {px, py} });
+            fireDelayTimer = 0.0f;
+        }
+    }
+
+    for (Object& shot : shots)
+    {
+        shot.position.y -= 1;
+    }
+
+    for (Object& shot : shots)
+    {
+        for (auto itr = asteroids.begin(); itr != asteroids.end(); )
+        {
+            /*if ((shot.x >= itr.x && shot.x + shot.width <= itr.x + itr.width)
+            && shot.y)*/
+
+            if (shot.position.x == itr->position.x && shot.position.y == itr->position.y)
             {
                 itr = asteroids.erase(itr);
             }
@@ -78,13 +88,13 @@ void Asteroids::Draw()
     drawer->DrawImageCached("bg.png", 0, 0);
     drawer->DrawImageCached("ship.png", px - 20, py - 20);
 
-    for (Position asteroid : asteroids)
+    for (Object& asteroid : asteroids)
     {
-        drawer->DrawImageCached("asteroid.png", asteroid.x - 100, asteroid.y - 100);
+        drawer->DrawImageCached("asteroid.png", asteroid.position.x - 100, asteroid.position.y - 100);
     }
-    for (Position shot : shots)
+    for (Object& shot : shots)
     {
-        drawer->DrawImageCached("shot.png", shot.x - 14, shot.y - 16);
+        drawer->DrawImageCached("shot.png", shot.position.x - 14, shot.position.y - 16);
     }
     //drawer->DrawText("arial.ttf", "Score: 0", 40, 20, 50);
 }

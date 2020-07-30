@@ -24,6 +24,9 @@
     <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\drawer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\texture_instance.h">
       <Filter>Header Files</Filter>
     </ClInclude>

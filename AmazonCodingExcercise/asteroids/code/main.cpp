@@ -8,17 +8,24 @@
 #include "drawer.h"
 #include "asteroids.h"
 
-int main(int argc, char *argv[])
+SDL_Window* window;
+SDL_Renderer* renderer;
+Drawer* drawer;
+Asteroids* asteroids;
+float lastFrame;
+bool running;
+
+bool OnStart()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        return 1;
+        return false;
     }
 
     const int width = 800;
     const int height = 600;
-    SDL_Window* window = SDL_CreateWindow(
+    window = SDL_CreateWindow(
         "Asteroids",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
@@ -29,42 +36,66 @@ int main(int argc, char *argv[])
     if (window == nullptr)
     {
         printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        return 1;
+        return false;
     }
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    Drawer* drawer = Drawer::Create(window, renderer);
-    Asteroids* asteroids = Asteroids::Create(drawer);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    drawer = Drawer::Create(window, renderer);
+    asteroids = Asteroids::Create(drawer);
 
-    float lastFrame = (float) SDL_GetTicks() * 0.001f;
-    
-    while (true)
+    lastFrame = (float) SDL_GetTicks() * 0.001f;
+    running = true;
+
+    return true;
+}
+
+void OnUpdate()
+{
+    SDL_Event currentEvent;
+    if (SDL_PollEvent(&currentEvent) && currentEvent.type == SDL_QUIT)
     {
-        SDL_Event currentEvent;
-        SDL_PollEvent(&currentEvent);
-        
-        float currentFrame = (float) SDL_GetTicks() * 0.001f;
-        float elapsedTime = currentFrame - lastFrame;
-
-        SDL_RenderClear(renderer);
-
-        asteroids->Update(elapsedTime);
-        asteroids->Draw();
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        
-        lastFrame = currentFrame;
-
-        SDL_RenderPresent(renderer);
-        SDL_Delay(1000 / 200);
+        running = false;
+        return;
     }
+    
+    float currentFrame = (float) SDL_GetTicks() * 0.001f;
+    float elapsedTime = currentFrame - lastFrame;
 
-    SDL_DestroyWindow(window);
+    SDL_RenderClear(renderer);
+
+    asteroids->Update(elapsedTime);
+    asteroids->Draw();
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    
+    lastFrame = currentFrame;
+
+    SDL_RenderPresent(renderer);
+    SDL_Delay(1000 / 200);
+}
+
+void OnEnd()
+{
+
+}
+
+int OnExit()
+{
     SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
 
     delete asteroids;
     delete drawer;
 
     return 0;
+}
+
+int main(int argc, char *argv[])
+{
+    if (OnStart())
+        while (running)
+            OnUpdate();
+    
+    return OnExit();
 }

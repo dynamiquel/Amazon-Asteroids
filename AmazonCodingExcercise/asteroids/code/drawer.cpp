@@ -53,6 +53,12 @@ static SDL_Surface* CreateImageSurface(const char* img)
     return newDrawer;
 }
 
+Drawer::~Drawer()
+{
+    textures->Clear();
+    delete textures;
+}
+
 bool Drawer::DrawImage(const char* img, int posX, int posY)
 {
     SDL_Surface* surface = CreateImageSurface(img);
