@@ -1,0 +1,25 @@
+# CMake generation dependency list for this directory.
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/CMakeLists.txt
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/CMakeFiles/3.18.0/CMakeCXXCompiler.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/CMakeFiles/3.18.0/CMakeRCCompiler.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/CMakeFiles/3.18.0/CMakeSystem.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/CMakeFiles/cmake.verify_globs
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeCXXInformation.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeCommonLanguageInclude.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeGenericSystem.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeInitializeConfigs.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeLanguageInformation.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeRCInformation.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeSystemSpecificInformation.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/CMakeSystemSpecificInitialize.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/Compiler/MSVC-CXX.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/Platform/Windows-MSVC-CXX.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/Platform/Windows-MSVC.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/Platform/Windows.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/cmake/win/share/cmake-3.18/Modules/Platform/WindowsPaths.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/cmake/SDL2Config.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/cmake/SDL2ConfigVersion.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/cmake/SDL2Targets-debug.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/cmake/SDL2Targets-relwithdebinfo.cmake
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/cmake/SDL2Targets.cmake

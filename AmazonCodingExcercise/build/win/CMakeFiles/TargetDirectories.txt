@@ -1,0 +1,2 @@
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/CMakeFiles/asteroids.dir
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/CMakeFiles/ALL_BUILD.dir

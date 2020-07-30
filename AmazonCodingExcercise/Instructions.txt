@@ -1,0 +1,47 @@
+This exercise contains an incomplete Asteroids game, implemented with SDL2 (you can find the documentation for SDL2 at https://wiki.libsdl.org/).
+
+Tasks:
+- Fix any bugs and performance issues with the current code.
+- Modify the code architecture if you feel it can be improved, in any way you feel fit.
+- Document your work explaining your changes and decisions in asteroids/Worklog.txt (This will be used in conjunction with your code/comments to better understand the decisions you've made)
+- Clearly comment any modifications you made to the code.
+- Complete the game by adding missing functionality, endgame conditions, mechanics, enemies or any other features you may consider.
+  Some ideas (you don't necessarily need to do these):
+  - Original asteroids Ship controls (rotation and thrust)
+  - Screen wrapping
+  - Score
+  - Lives
+  - Win / Game Over logic
+  - ..etc..
+
+There is no hard time limit for this task other than the due date.
+Our suggested time for this exercise is around 2-3 hours, however you may spend more time if you like.
+
+Important note:
+- You must provide compiled and working binaries (for your platform) of your exercise.
+
+------------------
+ Getting started
+------------------
+This exercise can be done using Windows, Linux or Mac platforms.
+However, we recommend to use Windows.
+
+Follow the steps on how_to_build.txt to set up the project.
+
+------------------
+ Submission
+------------------
+- Create a .zip file with your name (e.g. AlexGarcia.zip)
+- The file must contain *only* "asteroids" folder, this should contain the code, game assets and binaries.
+- Please ensure you include any extra (.dll/.so) dependencies you may have added in the bin folder.
+- Upload your asteroids exercise to: https://www.amazon.co.uk/clouddrive (You can use your existing Amazon account).
+- Email jonawals@amazon.com a shared link to the compressed file (by clicking "Share" at the top of the page).
+
+------
+ Help
+------
+If you require any further clarification regarding what is expected of this task then please email [jonawals@amazon.com] or [aljanru@amazon.co.uk] within the UK office hours of 09:00-1700.
+Please note that hints regarding the task will not given.
+
+If for whatever reason you cannot get the setup script to work, please contact [jonawals@amazon.com] or [aljanru@amazon.co.uk] at the earliest opportunity.
+Any delay in doing so will not be compensated for.

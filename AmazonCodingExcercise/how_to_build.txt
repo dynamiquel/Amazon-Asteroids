@@ -1,0 +1,66 @@
+---------
+ Windows
+---------
+- ensure visual studio (2017 or 2019) is installed with C++ language support
+- run setup_win.bat
+- open .sln file in build/win folder
+
+Troubleshoot:
+- Compilation doesn't handle well paths with spaces, please make sure to unzip on a path without any spaces in the name.
+
+
+
+-----
+ Mac
+-----
+- ensure xcode is installed
+- open terminal and execute:
+  - $ chmod +x setup_mac.sh
+  - $ ./setup_mac.sh
+- open .xcodeproj in build/mac folder
+
+Troubleshoot:
+- Compilation doesn't handle well paths with spaces, please make sure to unzip on a path without any spaces in the name.
+- If you get this error: "xcode-select: error: tool 'xcodebuild' requires Xcode,
+  but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance".
+  Try the following:
+  - sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+
+
+-------
+ Linux
+-------
+- ensure a C++ compiler is installed (clang / gcc)
+- open terminal and execute:
+  - $ chmod +x setup_linux.sh
+  - $ ./setup_linux.sh
+- build the project by using:
+  - $ cd build/linux
+  - $ make
+
+if you want to use an IDE instead raw makefiles, delete the build/linux folder and change all "Unix Makefiles" in build_linux.sh to your preferred generator.
+For example: "CodeBlocks - Unix Makefiles"
+
+Troubleshoot:
+- Compilation doesn't handle well paths with spaces, please make sure to unzip on a path without any spaces in the name.
+- If you get an error message like: ERROR: Missing Xext.h, maybe you need to install the libxext-dev, try installing the package.
+  In case the package is already installed, try replacing the line 409 in cmake/sdlchecks.cmake:
+    check_include_files("X11/Xlib.h;X11/Xproto.h;X11/extensions/Xext.h" HAVE_XEXT_H)
+  with:
+    set(HAVE_XEXT_H 1)
+    
+
+--------
+ Notes
+--------
+
+During the setup, you may see messages like:
+-- Performing Test HAVE_BLABLABLA - Failed
+
+These are not errors, they are just CMake checks for several libraries availability.
+
+--------
+ Help
+--------
+If you have any issues building the project, please contact aljanru@amazon.co.uk specifying the platform you are building for and the issue you are facing.

@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B99EFC15-0D98-3CC4-9E3B-57EE207D9B10}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>asteroids</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Debug</LocalDebuggerWorkingDirectory>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">asteroids.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">asteroids</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Release</LocalDebuggerWorkingDirectory>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">asteroids.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">asteroids</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/RelWithDebInfo</LocalDebuggerWorkingDirectory>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\bin\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">asteroids.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">asteroids</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\cmake\win\bin\cmake.exe -E copy_if_different S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/bin/SDL2d.dll S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\cmake\win\bin\cmake.exe -E copy_directory S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/data S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\lib\SDL2d.lib;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\lib\SDL2maind.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;advapi32.lib;setupapi.lib;shell32.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/Debug/asteroids.lib</ImportLibrary>
+      <ProgramDataBaseFile>S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Debug/asteroids.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\cmake\win\bin\cmake.exe -E copy_if_different S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/bin/SDL2d.dll S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Release
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\cmake\win\bin\cmake.exe -E copy_directory S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/data S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Release
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\lib\SDL2d.lib;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\lib\SDL2maind.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;advapi32.lib;setupapi.lib;shell32.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/Release/asteroids.lib</ImportLibrary>
+      <ProgramDataBaseFile>S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/Release/asteroids.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\..\thirdparty\stb;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\cmake\win\bin\cmake.exe -E copy_if_different S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/install/win/bin/SDL2.dll S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/RelWithDebInfo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\cmake\win\bin\cmake.exe -E copy_directory S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/data S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/RelWithDebInfo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\lib\SDL2.lib;S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\sdl\install\win\lib\SDL2main.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;advapi32.lib;setupapi.lib;shell32.lib;dinput8.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/build/win/RelWithDebInfo/asteroids.lib</ImportLibrary>
+      <ProgramDataBaseFile>S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/bin/RelWithDebInfo/asteroids.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\asteroids.cpp" />
+    <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\asteroids.h" />
+    <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\drawer.cpp" />
+    <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\drawer.h" />
+    <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\main.cpp" />
+    <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\texture_instance.cpp" />
+    <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\texture_instance.h" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

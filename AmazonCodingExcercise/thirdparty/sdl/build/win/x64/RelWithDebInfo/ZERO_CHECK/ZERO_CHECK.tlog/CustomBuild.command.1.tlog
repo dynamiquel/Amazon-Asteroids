@@ -1,0 +1,10 @@
+^S:\USERS\LIAMK\DEVELOPMENT\GAMES\AMAZONCODINGEXCERCISE\AMAZONCODINGEXCERCISE\THIRDPARTY\SDL\BUILD\WIN\CMAKEFILES\93C78F1A6E3BDA047E5EACE99DC77733\GENERATE.STAMP.RULE
+setlocal
+S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\thirdparty\cmake\win\bin\cmake.exe -SS:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl -BS:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/SDL2.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,7 @@
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/CMakeFiles/SDL2-static.dir
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/CMakeFiles/SDL2main.dir
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/CMakeFiles/INSTALL.dir
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/CMakeFiles/SDL2.dir
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/CMakeFiles/uninstall.dir
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/CMakeFiles/ALL_BUILD.dir
+S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/thirdparty/sdl/build/win/CMakeFiles/ZERO_CHECK.dir
