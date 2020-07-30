@@ -4,6 +4,8 @@ Textures::Textures()
 {
 }
 
+// Attempts to get a texture from the texture map.
+// Returns nullptr if none was found.
 SDL_Texture* Textures::GetTexture(const char* textureName)
 {
     auto pos = textures.find(textureName);
@@ -17,6 +19,7 @@ SDL_Texture* Textures::GetTexture(const char* textureName)
 
 }
 
+// Adds a texture to the texture map so it can be reused.
 void Textures::AddTexture(const char* textureName, SDL_Texture* texture)
 {
     textures[textureName] = texture;

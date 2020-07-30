@@ -2,11 +2,11 @@
 // Disclaimer: This code is intentionally written to a substandard quality and
 // is not representative of Amazon coding standards or Amazon best practices.
 
-#include <SDL.h>
-#include <stdio.h>
-
 #include "drawer.h"
 #include "asteroids.h"
+
+#include <SDL.h>
+#include <stdio.h>
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -71,6 +71,7 @@ void OnUpdate()
     lastFrame = currentFrame;
 
     SDL_RenderPresent(renderer);
+    // 200 fps cap.
     SDL_Delay(1000 / 200);
 }
 

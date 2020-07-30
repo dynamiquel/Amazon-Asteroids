@@ -1,3 +1,28 @@
 [Add your work here and the estimate amount of time spent(remember that there is no hard time limit)]
-Time spent: 
+Time spent:
 
+1. Changed the SDL_Renderer from SDL_RENDERER_SOFTWARE to SDL_RENDERER_ACCELERATED.
+2. Changed SDL_Delay from 1 to 1000 / 200 (~200 fps)
+3. Created a class called Textures, which contains a map of SDL_Textures.
+4. Added a method to replace Drawer.DrawImage() called Drawer.DrawImageCached().
+   Instead of destroying the newly created texture after use, it is added to the Textures object for caching purposes.
+   If Textures contains a key for the desired image, then that texture will be used instead of creating a new one.
+   This removes the memory leak.
+5. Added more user input options, such as WASD, key pad and rotation.
+6. Added a delay to firing using delta time.
+7. Split up the Main class from one method to OnStart(), OnUpdate(), OnEnd(), OnExit().
+8. Added the ability to exit the app using the Close button.
+9. Created an Object class to replace Position in Asteroids.
+   It contains basic info for in-game objects, such as position, size and rotation.
+10. Changed the way an Object's Position is represented.
+   Object.rect.position represents the centre of the Object; not the top-left.
+   The Rect.Left(), Rect.Top(), Rect.Right() and Rect.Bottom() methods can be used to get corners.
+   The Object contructor has a boolean value, which determines whether the given position should be treated as a top-left or centre position.
+   The entire Rect area represents the collider of the Object; not the texture. The size of the texture will be the size of the image file it came from.
+   This is useful as the texture may have extra padding, which would be unideal for a collider as it would be difficult for users to see
+   where colliders are.
+11. Replaced the existing collision detection with Object.IsColliding(Object&).
+   This method returns true if the two Rects are overlapping.
+12. Increased window size to 1280x1024 (bg.png resolution).
+====== 6 hours ======
+Day 2

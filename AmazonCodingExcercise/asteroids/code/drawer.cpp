@@ -95,10 +95,13 @@ bool Drawer::DrawImageCached(const char* img, const Object& object, const bool f
     return DrawImageCached(img, object.rect.position.x, object.rect.position.y, fromCentre);
 }
 
+// Draws a texture to the screen, using cached textures.
 bool Drawer::DrawImageCached(const char* img, int posX, int posY, const bool fromCentre)
 {
+    // Attempts to get a cached texture with the given image name.
     SDL_Texture* texture = textures->GetTexture(img);
 
+    // No cached textures with the given image name.
     if (texture == nullptr)
     {
         texture = GetTexture(img);
@@ -109,18 +112,22 @@ bool Drawer::DrawImageCached(const char* img, int posX, int posY, const bool fro
         textures->AddTexture(img, texture);
     }
 
+    // Gets the height and width of the texture.
     int width;
     int height;
-    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+    SDL_QueryTexture(texture, NULL, NULL, /*OUT*/ &width, /*OUT*/ &height);
 
     SDL_Rect posRect;
+    // If the given's positions were centre positions; not top-left.
     if (fromCentre)
     {
+        // Positions the centre of the texture to the given positions.
         posRect.x = posX - (int)(roundf(width * .5f));
         posRect.y = posY - (int)(roundf(height * .5f));
     }
     else
     {
+        // Positions the top-left corner of the texture to the given positions.
         posRect.x = posX;
         posRect.y = posY;
     }
@@ -132,6 +139,7 @@ bool Drawer::DrawImageCached(const char* img, int posX, int posY, const bool fro
     return true;
 }
 
+// Creates a new texture with the given image and returns it.
 SDL_Texture* Drawer::GetTexture(const char* img)
 {
     SDL_Surface* surface = CreateImageSurface(img);

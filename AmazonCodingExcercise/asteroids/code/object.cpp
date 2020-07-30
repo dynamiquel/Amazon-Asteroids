@@ -1,4 +1,5 @@
 #include "object.h"
+
 #include <math.h>
 
 Object::Object(const Vector2Int& position, const Vector2Int& size, const bool fromCentre)

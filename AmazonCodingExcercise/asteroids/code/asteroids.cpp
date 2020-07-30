@@ -2,12 +2,13 @@
 // Disclaimer: This code is intentionally written to a substandard quality and
 // is not representative of Amazon coding standards or Amazon best practices.
 
-#include "asteroids.h"
-#include <SDL.h>
-#include <list>
 #include "drawer.h"
 #include "object.h"
+#include "asteroids.h"
+
+#include <SDL.h>
 #include <limits.h>
+#include <list>
 
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
@@ -61,6 +62,7 @@ void Asteroids::Update(float deltatime)
 
     for (auto itr = shots.begin(); itr != shots.end();)
     {
+        // Destroys the shot if it's out of range.
         if ((itr->rect.position.y--) <= INT_MIN)
             itr = shots.erase(itr);
         else
