@@ -4,7 +4,7 @@
 
 #pragma once
 
-class Drawer;
+#include "drawer.h"
 
 class Asteroids
 {

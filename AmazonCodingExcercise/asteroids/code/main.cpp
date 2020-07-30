@@ -32,13 +32,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     Drawer* drawer = Drawer::Create(window, renderer);
     Asteroids* asteroids = Asteroids::Create(drawer);
 
     float lastFrame = (float) SDL_GetTicks() * 0.001f;
-    char frameBuffer[12];
-
+    
     while (true)
     {
         SDL_Event currentEvent;
@@ -48,9 +47,6 @@ int main(int argc, char *argv[])
         float elapsedTime = currentFrame - lastFrame;
 
         SDL_RenderClear(renderer);
-
-        sprintf(frameBuffer, "%f", currentFrame);
-        drawer->DrawText("arial.ttf", "99", 20, 20, 50);
 
         asteroids->Update(elapsedTime);
         asteroids->Draw();

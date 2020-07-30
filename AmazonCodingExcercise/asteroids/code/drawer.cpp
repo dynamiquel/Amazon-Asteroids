@@ -12,6 +12,8 @@
 #include <stb_image.h>
 #include <stbttf.h>
 
+#include <SDL.h>
+
 static SDL_Surface* CreateImageSurface(const char* img)
 {
     int req_format = STBI_rgb_alpha;
@@ -57,41 +59,23 @@ bool Drawer::DrawImage(const char* img, int posX, int posY)
     SDL_Surface* surface = CreateImageSurface(img);
     if (surface)
     {
-        SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-        SDL_FreeSurface(surface);
+        SDL_Texture* optimizedSurface = SDL_CreateTextureFromSurface(m_renderer, surface);
+
+        SDL_Rect sizeRect;
+        sizeRect.x = 0;
+        sizeRect.y = 0;
+        sizeRect.w = surface->w;
+        sizeRect.h = surface->h;
 
         SDL_Rect posRect;
         posRect.x = posX;
         posRect.y = posY;
-        posRect.w = surface->w;
-        posRect.h = surface->h;
+        posRect.w = sizeRect.w;
+        posRect.h = sizeRect.h;
 
-        SDL_RenderCopy(m_renderer, texture, NULL, &posRect);       
-        SDL_DestroyTexture(texture);
-
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-bool Drawer::GetTexture(const char* img, int posX, int posY, /*OUT*/ TextureInstance* texture)
-{
-    SDL_Surface* surface = CreateImageSurface(img);
-    if (surface)
-    {
-        SDL_Texture* tex = SDL_CreateTextureFromSurface(m_renderer, surface);
+        SDL_RenderCopy(m_renderer, optimizedSurface, &sizeRect, &posRect);
         SDL_FreeSurface(surface);
-
-        SDL_Rect positionRect;
-        positionRect.x = posX;
-        positionRect.y = posY;
-        positionRect.w = surface->w;
-        positionRect.h = surface->h;
-
-        texture = new TextureInstance(tex, &positionRect);
+        SDL_DestroyTexture(optimizedSurface);
 
         return true;
     }
