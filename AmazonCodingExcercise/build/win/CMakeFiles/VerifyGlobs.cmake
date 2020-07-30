@@ -8,6 +8,7 @@ set(OLD_GLOB
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/asteroids.cpp"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/drawer.cpp"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/main.cpp"
+  "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/object.cpp"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/texture_instance.cpp"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/textures.cpp"
   )

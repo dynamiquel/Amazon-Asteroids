@@ -90,7 +90,12 @@ bool Drawer::DrawImage(const char* img, int posX, int posY)
     }
 }
 
-void Drawer::DrawImageCached(const char* img, int posX, int posY)
+bool Drawer::DrawImageCached(const char* img, const Object& object, const bool fromCentre)
+{
+    return DrawImageCached(img, object.rect.position.x, object.rect.position.y, fromCentre);
+}
+
+bool Drawer::DrawImageCached(const char* img, int posX, int posY, const bool fromCentre)
 {
     SDL_Texture* texture = textures->GetTexture(img);
 
@@ -99,7 +104,7 @@ void Drawer::DrawImageCached(const char* img, int posX, int posY)
         texture = GetTexture(img);
 
         if (!texture)
-            return;
+            return false;
 
         textures->AddTexture(img, texture);
     }
@@ -109,12 +114,22 @@ void Drawer::DrawImageCached(const char* img, int posX, int posY)
     SDL_QueryTexture(texture, NULL, NULL, &width, &height);
 
     SDL_Rect posRect;
-    posRect.x = posX;
-    posRect.y = posY;
+    if (fromCentre)
+    {
+        posRect.x = posX - (int)(roundf(width * .5f));
+        posRect.y = posY - (int)(roundf(height * .5f));
+    }
+    else
+    {
+        posRect.x = posX;
+        posRect.y = posY;
+    }
     posRect.w = width;
     posRect.h = height;
 
     SDL_RenderCopy(m_renderer, texture, NULL, &posRect);
+
+    return true;
 }
 
 SDL_Texture* Drawer::GetTexture(const char* img)

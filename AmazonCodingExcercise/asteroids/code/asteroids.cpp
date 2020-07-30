@@ -7,6 +7,7 @@
 #include <list>
 #include "drawer.h"
 #include "object.h"
+#include <limits.h>
 
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
@@ -15,10 +16,10 @@
     return newAsteroids;
 }
 
-Object* ship = new Object{{200, 300}, {40, 40}};
-static int moveVelocity = 5;
+Object* ship = new Object({640, 850}, {40, 40});
+static int moveVelocity = 1;
 static std::list<Object> shots;
-static std::list<Object> asteroids = { Object{ {200, 200}, {250, 250} } };
+static std::list<Object> asteroids = { Object({500, 500}, {40, 40}) };
 
 void Asteroids::Update(float deltatime)
 {
@@ -26,19 +27,19 @@ void Asteroids::Update(float deltatime)
 
     if (keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_KP_4] || keystate[SDL_SCANCODE_A])
     {
-        ship->position.x -= moveVelocity;
+        ship->rect.position.x -= moveVelocity;
     }
     if (keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_KP_6] || keystate[SDL_SCANCODE_D])
     {
-        ship->position.x += moveVelocity;
+        ship->rect.position.x += moveVelocity;
     }
     if (keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_KP_8] || keystate[SDL_SCANCODE_W])
     {
-        ship->position.y -= moveVelocity;
+        ship->rect.position.y -= moveVelocity;
     }
     if (keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_KP_5] || keystate[SDL_SCANCODE_S])
     {
-        ship->position.y += moveVelocity;
+        ship->rect.position.y += moveVelocity;
     }
     if (keystate[SDL_SCANCODE_KP_7] || keystate[SDL_SCANCODE_Q])
     {
@@ -53,14 +54,18 @@ void Asteroids::Update(float deltatime)
     {
         if ((fireDelayTimer += deltatime) >= fireDelay)
         {
-            shots.push_back(Object{ {ship->position.x, ship->position.y}, {28, 31}});
+            shots.push_back(Object({ship->rect.position.x, ship->rect.Top()}, {15, 25}));
             fireDelayTimer = 0.0f;
         }
     }
 
-    for (Object& shot : shots)
+    for (auto itr = shots.begin(); itr != shots.end();)
     {
-        shot.position.y -= 1;
+        if ((itr->rect.position.y--) <= INT_MIN)
+            itr = shots.erase(itr);
+        else
+            ++itr;
+            
     }
 
     for (Object& shot : shots)
@@ -69,8 +74,7 @@ void Asteroids::Update(float deltatime)
         {
             /*if ((shot.x >= itr.x && shot.x + shot.width <= itr.x + itr.width)
             && shot.y)*/
-
-            if (shot.position.x == itr->position.x && shot.position.y == itr->position.y)
+            if (itr->IsColliding(shot))
             {
                 itr = asteroids.erase(itr);
             }
@@ -84,16 +88,16 @@ void Asteroids::Update(float deltatime)
 
 void Asteroids::Draw()
 {
-    drawer->DrawImageCached("bg.png", 0, 0);
-    drawer->DrawImageCached("ship.png", ship->position.x, ship->position.y);
+    drawer->DrawImageCached("bg.png", 0, 0, false);
+    drawer->DrawImageCached("ship.png", *ship);
 
     for (Object& asteroid : asteroids)
     {
-        drawer->DrawImageCached("asteroid.png", asteroid.position.x - 100, asteroid.position.y - 100);
+        drawer->DrawImageCached("ship_enemy.png", asteroid);
     }
     for (Object& shot : shots)
     {
-        drawer->DrawImageCached("shot.png", shot.position.x, shot.position.y);
+        drawer->DrawImageCached("shot.png", shot);
     }
     //drawer->DrawText("arial.ttf", "Score: 0", 40, 20, 50);
 }

@@ -23,8 +23,8 @@ bool OnStart()
         return false;
     }
 
-    const int width = 800;
-    const int height = 600;
+    const int width = 1280;
+    const int height = 1024;
     window = SDL_CreateWindow(
         "Asteroids",
         SDL_WINDOWPOS_UNDEFINED,

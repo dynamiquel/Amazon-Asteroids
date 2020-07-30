@@ -10,6 +10,9 @@
     <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\texture_instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -7,6 +7,7 @@
 #include <SDL.h>
 #include "texture_instance.h"
 #include "textures.h"
+#include "object.h"
 
 class Drawer
 {
@@ -15,7 +16,8 @@ public:
     ~Drawer();
 
     bool DrawImage(const char* imagePath, int posX = 0, int posY = 0);
-    void DrawImageCached(const char* img, int posX, int posY);
+    bool DrawImageCached(const char* img, int posX, int posY, const bool fromCentre = true);
+    bool DrawImageCached(const char* img, const Object& object, const bool fromCentre = true);
     SDL_Texture* GetTexture(const char* imagePath);
     bool DrawText(const char* font, const char* text, float size, int posX, int posY);
 
