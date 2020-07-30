@@ -5,7 +5,6 @@
 #pragma once
 
 #include <SDL.h>
-#include "texture_instance.h"
 #include "textures.h"
 #include "object.h"
 
