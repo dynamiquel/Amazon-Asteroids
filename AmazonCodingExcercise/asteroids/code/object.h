@@ -1,16 +1,11 @@
 #pragma once
 
 #include <math.h>
+#include "vector2int.h"
 
 class Object
 {
     public:
-        struct Vector2Int
-        {
-            int x;
-            int y;
-        };
-
         struct Rect
         {
             Vector2Int position;
@@ -24,8 +19,10 @@ class Object
         };
 
         Rect rect;
-        float rotation;
+        float rotation = .0f;
         const char* textureId;
+        bool phasable;
+        short health = -1;
 
         Object(const Vector2Int& position, const Vector2Int& size, const bool fromCentre = true);
         bool IsColliding(const Object& object) const;

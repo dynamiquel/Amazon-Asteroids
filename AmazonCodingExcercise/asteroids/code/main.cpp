@@ -43,6 +43,8 @@ bool OnStart()
     drawer = Drawer::Create(window, renderer);
     asteroids = Asteroids::Create(drawer);
 
+    asteroids->OnStart();
+
     lastFrame = (float) SDL_GetTicks() * 0.001f;
     running = true;
 
@@ -63,7 +65,7 @@ void OnUpdate()
 
     SDL_RenderClear(renderer);
 
-    asteroids->Update(elapsedTime);
+    asteroids->OnUpdate(elapsedTime);
     asteroids->Draw();
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

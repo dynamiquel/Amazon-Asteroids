@@ -5,14 +5,24 @@
 #pragma once
 
 #include "drawer.h"
+#include "object.h"
+#include "vector2int.h"
 
 class Asteroids
 {
 public:
     static Asteroids* Create(Drawer* drawer);
     
-    void Update(float deltaTime);
+    void OnStart();
+    void OnUpdate(const float deltaTime);
+    void UserInput(const float deltaTime);
+    void Fire(const float deltaTime);
+    void CheckCollisions();
     void Draw();
+
+    Object CreateEnemy(const Vector2Int& position);
+    Object CreateAsteroid(const Vector2Int& position);
+    Object CreateShot(const Vector2Int& position);
 
 private:
     Drawer* drawer;

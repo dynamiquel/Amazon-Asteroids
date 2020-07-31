@@ -90,9 +90,9 @@ bool Drawer::DrawImage(const char* img, int posX, int posY)
     }
 }
 
-bool Drawer::DrawImageCached(const char* img, const Object& object, const bool fromCentre)
+bool Drawer::DrawImageCached(const char* img, const Vector2Int& position, const bool fromCentre)
 {
-    return DrawImageCached(img, object.rect.position.x, object.rect.position.y, fromCentre);
+    return DrawImageCached(img, position.x, position.y, fromCentre);
 }
 
 // Draws a texture to the screen, using cached textures.
