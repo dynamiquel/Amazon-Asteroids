@@ -115,7 +115,7 @@ bool Drawer::DrawImageCached(const char* img, int posX, int posY, const bool fro
     // Gets the height and width of the texture.
     int width;
     int height;
-    SDL_QueryTexture(texture, NULL, NULL, /*OUT*/ &width, /*OUT*/ &height);
+    SDL_QueryTexture(texture, NULL, NULL, /*out*/ &width, /*out*/ &height);
 
     SDL_Rect posRect;
     // If the given's positions were centre positions; not top-left.

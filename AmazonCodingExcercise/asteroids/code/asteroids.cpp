@@ -7,7 +7,6 @@
 
 #include <SDL.h>
 #include <limits.h>
-#include <list>
 
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
@@ -15,14 +14,6 @@
     newAsteroids->drawer = drawer;
     return newAsteroids;
 }
-
-Object* ship;
-static int moveVelocity = 1;
-static std::list<Object> shots;
-static std::list<Object> asteroids;
-static std::list<Object> enemies;
-static short maxLives = 3;
-static short lives = maxLives;
 
 void Asteroids::OnStart()
 {

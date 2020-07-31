@@ -8,6 +8,8 @@
 #include "object.h"
 #include "vector2int.h"
 
+#include <list>
+
 class Asteroids
 {
 public:
@@ -26,10 +28,23 @@ public:
 
 private:
     Drawer* drawer;
+
+    Object* ship;
+    std::list<Object> shots;
+    std::list<Object> asteroids;
+    std::list<Object> enemies;
+
     const float fireDelay = .5f;
     float fireDelayTimer = .0f;
     const float fastFireDelay = .1f;
     float fastFireDelayTimer = .0f;
     const float fastFireChargeDelay = 5.0f;
     float fastFireChargeDelayTimer = .0f;
+
+    const short maxLives = 3;
+    short lives = maxLives;
+
+    const short normalMoveVelocity = 1;
+    const short thrustMoveVelocity = 3;
+    short moveVelocity = normalMoveVelocity;
 };

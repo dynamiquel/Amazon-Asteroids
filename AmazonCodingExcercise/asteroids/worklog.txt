@@ -28,3 +28,7 @@ Time spent:
 12. Increased window size to 1280x1024 (bg.png resolution).
 ====== 6 hours ======
 Day 2
+13. Shots that collide with asteroids are destroyed.
+14. Added enemies.
+15. When the player collides with an asteroid or enemy, they lose a life and are set back to spawn position.
+16. The player can no longer leave the window boundaries.
