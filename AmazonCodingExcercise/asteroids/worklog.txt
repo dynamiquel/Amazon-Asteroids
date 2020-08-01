@@ -40,3 +40,6 @@ Day 3
     If thrust is used whiles it is replenishing, replenishing stops and the countdown starts again.
 18. Added mouse input for firing.
 19. Added a slight hover effect to the ship. This should make the game feel more alive.
+20. Fixed the memory leak and high CPU usage with drawing text by caching the font textures in Textures.
+21. The player's lives are displayed underneath the score.
+22. Score is gained when destroying enemies and asteroids. Asteroids = 1, Enemies = 2.

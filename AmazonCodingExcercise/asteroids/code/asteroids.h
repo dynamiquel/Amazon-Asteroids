@@ -41,6 +41,7 @@ private:
 
     const char scoreString[10] = "Score: %d";
     const char livesString[10] = "Lives: %d";
+    const char thrustString[21] = "Thrust: %d%% (%.1fs)";
 
     const float fireDelay = .5f;
     float fireDelayTimer = .0f;

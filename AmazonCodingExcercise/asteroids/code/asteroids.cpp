@@ -7,6 +7,7 @@
 
 #include <SDL.h>
 #include <limits.h>
+#include <math.h>
 
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
@@ -44,13 +45,16 @@ void Asteroids::DrawImages()
 
 void Asteroids::DrawText()
 {
-    char str2[20];
+    char str2[22];
 
     sprintf(str2, scoreString, score);
     drawer->DrawText("arial.ttf", str2, 40, 20, 50);
-    
+
     sprintf(str2, livesString, lives);
     drawer->DrawText("arial.ttf", str2, 40, 20, 100);
+
+    sprintf(str2, thrustString, (int)roundf((1 - (thrustTimeTimer * 1 / thrustTime)) * 100), thrustRechargeDelay - thrustRechargeDelayTimer);
+    drawer->DrawText("arial.ttf", str2, 25, 20, 150);
 }
 
 void Asteroids::OnStart()
@@ -193,7 +197,7 @@ void Asteroids::CheckCollisions()
                 enemies.erase(itr++);
                 shots.erase(shotItr++);
                 shotDestroyed = true;
-                score++;
+                score += 2;
                 break;
             }
             else
@@ -211,14 +215,14 @@ void Asteroids::CheckCollisions()
 
 void Asteroids::UpdateThrust(const float deltaTime)
 {
-    if (thrustTimeTimer > 0.1f && (thrustRechargeDelayTimer += deltaTime) >= thrustRechargeDelay)
+    if (thrustTimeTimer > .0f && (thrustRechargeDelayTimer += deltaTime) >= thrustRechargeDelay)
     {
         if (thrustTimeTimer < prevThrustTime)
         {
             prevThrustTime = thrustTimeTimer;
             thrustTimeTimer -= deltaTime * .25f;
 
-            if (thrustTimeTimer <= 0.1f)
+            if (thrustTimeTimer <= .0f)
             {
                 thrustRechargeDelayTimer = .0f;
                 prevThrustTime = 1000.f;
