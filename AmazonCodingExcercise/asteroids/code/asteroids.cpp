@@ -34,17 +34,17 @@ void Asteroids::Draw()
 
 void Asteroids::DrawImages()
 {
-    drawer->DrawImageCached("bg.png", 0, 0, 0, false);
-    drawer->DrawImageCached("ship.png", *ship);
+    drawer->DrawImage("bg.png", 0, 0, 0, false);
+    drawer->DrawImage("ship.png", *ship);
 
     for (Object& asteroid : asteroids)
-        drawer->DrawImageCached("asteroid.png", asteroid);
+        drawer->DrawImage("asteroid.png", asteroid);
     for (Object& shot : shots)
-        drawer->DrawImageCached("shot.png", shot);
+        drawer->DrawImage("shot.png", shot);
     for (Object& enemy : enemies)
-        drawer->DrawImageCached("ship_enemy.png", enemy);
+        drawer->DrawImage("ship_enemy.png", enemy);
     for (TimedImage& timedImage : timedImages)
-        drawer->DrawImageCached(timedImage.imageName, timedImage.position);
+        drawer->DrawImage(timedImage.imageName, timedImage.position);
 }
 
 void Asteroids::DrawText()

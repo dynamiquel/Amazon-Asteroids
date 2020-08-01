@@ -46,3 +46,5 @@ Day 3
 23. Added health to enemies and asteroids.
 24. When an enemy ship is destroyed, a random explosion image from the given assets is displayed. 
     A struct called TimedImage is used to store the image name, position and lifetime.
+25. Renamed Drawer.DrawImageCached() to Drawer.DrawImage() and added float rotation to be a parameter.
+    By using SDL_RenderCopyEx() instead of SDL_RenderCopy(), images can now be rotated.

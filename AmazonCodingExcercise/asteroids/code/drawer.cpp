@@ -59,49 +59,18 @@ Drawer::~Drawer()
     delete textures;
 }
 
-bool Drawer::DrawImage(const char* img, int posX, int posY)
+bool Drawer::DrawImage(const char* img, const Object& object, const bool fromCentre)
 {
-    SDL_Surface* surface = CreateImageSurface(img);
-    if (surface)
-    {
-        SDL_Texture* optimizedSurface = SDL_CreateTextureFromSurface(m_renderer, surface);
-
-        SDL_Rect sizeRect;
-        sizeRect.x = 0;
-        sizeRect.y = 0;
-        sizeRect.w = surface->w;
-        sizeRect.h = surface->h;
-
-        SDL_Rect posRect;
-        posRect.x = posX;
-        posRect.y = posY;
-        posRect.w = sizeRect.w;
-        posRect.h = sizeRect.h;
-
-        SDL_RenderCopy(m_renderer, optimizedSurface, &sizeRect, &posRect);
-        SDL_FreeSurface(surface);
-        SDL_DestroyTexture(optimizedSurface);
-
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return DrawImage(img, object.rect.position, object.rect.rotation, fromCentre);
 }
 
-bool Drawer::DrawImageCached(const char* img, const Object& object, const bool fromCentre)
+bool Drawer::DrawImage(const char* img, const Vector2Int& position, const float rotation, const bool fromCentre)
 {
-    return DrawImageCached(img, object.rect.position, object.rect.rotation, fromCentre);
-}
-
-bool Drawer::DrawImageCached(const char* img, const Vector2Int& position, const float rotation, const bool fromCentre)
-{
-    return DrawImageCached(img, position.x, position.y, rotation, fromCentre);
+    return DrawImage(img, position.x, position.y, rotation, fromCentre);
 }
 
 // Draws a texture to the screen, using cached textures.
-bool Drawer::DrawImageCached(const char* img, int posX, int posY, const float rotation, const bool fromCentre)
+bool Drawer::DrawImage(const char* img, int posX, int posY, const float rotation, const bool fromCentre)
 {
     // Attempts to get a cached texture with the given image name.
     SDL_Texture* texture = textures->GetTexture(img);
@@ -139,6 +108,7 @@ bool Drawer::DrawImageCached(const char* img, int posX, int posY, const float ro
     posRect.w = width;
     posRect.h = height;
 
+    // Like SDL_RenderCopy but allows rotation.
     SDL_RenderCopyEx(m_renderer, texture, NULL, &posRect, rotation, NULL, SDL_FLIP_NONE);
 
     return true;
