@@ -19,10 +19,11 @@
 
 Asteroids::~Asteroids()
 {
-    ship = nullptr;
+    delete ship;
     shots.clear();
     asteroids.clear();
     enemies.clear();
+    timedImages.clear();
 }
 
 void Asteroids::Draw()
@@ -48,16 +49,16 @@ void Asteroids::DrawImages()
 
 void Asteroids::DrawText()
 {
-    char str2[22];
+    char formattedString[22];
 
-    sprintf(str2, scoreString, score);
-    drawer->DrawText("arial.ttf", str2, 40, 20, 50);
+    sprintf(formattedString, scoreString, score);
+    drawer->DrawText("arial.ttf", formattedString, 40, 20, 50);
 
-    sprintf(str2, livesString, lives);
-    drawer->DrawText("arial.ttf", str2, 40, 20, 100);
+    sprintf(formattedString, livesString, lives);
+    drawer->DrawText("arial.ttf", formattedString, 40, 20, 100);
 
-    sprintf(str2, thrustString, (int)roundf((1 - (thrustTimeTimer * 1 / thrustTime)) * 100), thrustRechargeDelay - thrustRechargeDelayTimer);
-    drawer->DrawText("arial.ttf", str2, 25, 20, 150);
+    sprintf(formattedString, thrustString, (int)roundf((1 - (thrustTimeTimer * 1 / thrustTime)) * 100), thrustRechargeDelay - thrustRechargeDelayTimer);
+    drawer->DrawText("arial.ttf", formattedString, 25, 20, 150);
 }
 
 void Asteroids::OnStart()
@@ -99,22 +100,22 @@ void Asteroids::UserInput(const float deltaTime)
         moveVelocity = normalMoveVelocity;    
     if (keyState[SDL_SCANCODE_LEFT] || keyState[SDL_SCANCODE_KP_4] || keyState[SDL_SCANCODE_A])
     {
-        if (ship->rect.position.x > 0)
+        if (ship->rect.position.x > 10)
             ship->rect.position.x -= moveVelocity;
     }
     if (keyState[SDL_SCANCODE_RIGHT] || keyState[SDL_SCANCODE_KP_6] || keyState[SDL_SCANCODE_D])
     {
-        if (ship->rect.position.x < 1280)
+        if (ship->rect.position.x < 1270)
             ship->rect.position.x += moveVelocity;
     }
     if (keyState[SDL_SCANCODE_UP] || keyState[SDL_SCANCODE_KP_8] || keyState[SDL_SCANCODE_W])
     {
-        if (ship->rect.position.y > 0)
+        if (ship->rect.position.y > 10)
             ship->rect.position.y -= moveVelocity;
     }
     if (keyState[SDL_SCANCODE_DOWN] || keyState[SDL_SCANCODE_KP_5] || keyState[SDL_SCANCODE_S])
     {
-        if (ship->rect.position.y < 1024)
+        if (ship->rect.position.y < 1014)
             ship->rect.position.y += normalMoveVelocity;
     }
     if (keyState[SDL_SCANCODE_KP_7] || keyState[SDL_SCANCODE_Q])
@@ -161,16 +162,16 @@ void Asteroids::CheckCollisions()
         }
     }
 
+    // Destroys shots that are out of range. Prevents memory issues.
     for (auto itr = shots.begin(); itr != shots.end();)
     {
-        // Destroys the shot if it's out of range.
         if ((itr->rect.position.y--) <= INT_MIN)
             shots.erase(itr++);
         else
-            ++itr;
-            
+            ++itr;        
     }
 
+    // Checks collisions between shots and enemies, and destroys objects if required.
     for (auto shotItr = shots.begin(); shotItr != shots.end();)
     {
         bool shotDestroyed = false;
@@ -228,6 +229,7 @@ void Asteroids::CheckCollisions()
     }
 }
 
+// Checks if the player's thrust needs replenishing, if so, it is gradually replenished.
 void Asteroids::UpdateThrust(const float deltaTime)
 {
     if (thrustTimeTimer > .0f && (thrustRechargeDelayTimer += deltaTime) >= thrustRechargeDelay)
@@ -251,6 +253,7 @@ void Asteroids::UpdateThrust(const float deltaTime)
     }
 }
 
+// Sequentially moves the player's ship slightly in a square pattern.
 void Asteroids::UpdateHoverEffect(const float deltaTime)
 {
     if ((hoverDirectionDelayTimer += deltaTime) >= hoverDirectionDelay)
@@ -278,6 +281,8 @@ void Asteroids::UpdateHoverEffect(const float deltaTime)
     }
 }
 
+// Updates the life-time on the timedImages.
+// If image has run out of life-time, destroy it.
 void Asteroids::UpdateTimedImages(const float deltaTime)
 {
     for (auto itr = timedImages.begin(); itr != timedImages.end();)
@@ -289,12 +294,13 @@ void Asteroids::UpdateTimedImages(const float deltaTime)
     }
 }
 
+// Chooses a random explosion image and adds it to the timedImages list.
 void Asteroids::CreateExplosion(const Vector2Int& position)
 {
     int index = rand() % 9;
-    char* str2 = new char[19];
-    sprintf(str2, explosionImageString, index);
-    timedImages.push_back(TimedImage {str2, position, .25f});
+    char* formattedString = new char[19];
+    sprintf(formattedString, explosionImageString, index);
+    timedImages.push_back(TimedImage {formattedString, position, .25f});
 }
 
 Object Asteroids::CreateEnemy(const Vector2Int& position)

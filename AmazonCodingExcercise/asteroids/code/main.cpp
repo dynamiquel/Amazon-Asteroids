@@ -19,7 +19,7 @@ bool running;
 
 bool OnStart()
 {
-    // Initialise random seed.
+    // Initialise a random seed for rand().
     srand(time(NULL));
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -59,6 +59,8 @@ bool OnStart()
 void OnUpdate()
 {
     SDL_Event currentEvent;
+
+    // Checks if the user pressed the Close button.
     if (SDL_PollEvent(&currentEvent) && currentEvent.type == SDL_QUIT)
     {
         running = false;

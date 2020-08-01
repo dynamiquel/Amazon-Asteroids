@@ -35,13 +35,14 @@ Day 2
 16. The player can no longer leave the window boundaries.
 ====== 2 hours ======
 Day 3
-17. Added Thrust. Because physics, thrust only applies to forward movement. The amount of thrust is based on seconds using Asteroids.thurstTime.
+17. Added Thrust. The amount of thrust is based on seconds using Asteroids.thurstTime.
     When some thrust is deplated, a countdown starts and when it finishes, the thrust slowly replenishes.
     If thrust is used whiles it is replenishing, replenishing stops and the countdown starts again.
 18. Added mouse input for firing.
 19. Added a slight hover effect to the ship. This should make the game feel more alive.
-20. Fixed the memory leak and high CPU usage with drawing text by caching the font textures in Textures.
+20. Fixed the memory leak and high CPU usage when drawing text. This was done by caching the font textures in Textures.
 21. The player's lives and thrust levels are displayed underneath the score.
 22. Score is gained when destroying enemies and asteroids. Asteroids = 1, Enemies = 2.
 23. Added health to enemies and asteroids.
-24. Added random explosions when enemy ships are destroyed.
+24. When an enemy ship is destroyed, a random explosion image from the given assets is displayed. 
+    A struct called TimedImage is used to store the image name, position and lifetime.

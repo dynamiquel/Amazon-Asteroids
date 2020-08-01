@@ -6,7 +6,6 @@
 class Textures
 {
     public:
-        Textures();
         SDL_Texture* GetTexture(const char* textureName);
         void AddTexture(const char* textureName, SDL_Texture* texture);
         void RemoveTexture(const char* textureName);
