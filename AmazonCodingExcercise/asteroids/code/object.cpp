@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-Object::Object(const Vector2Int& position, const Vector2Int& size, const bool fromCentre)
+Object::Object(const Vector2Int& position, const Vector2Int& size, const float rotation, const bool fromCentre)
 {
     if (fromCentre)
     {
@@ -15,6 +15,7 @@ Object::Object(const Vector2Int& position, const Vector2Int& size, const bool fr
     }
 
     this->rect.size = size;
+    this->rect.rotation = rotation;
 }
 
 bool Object::IsColliding(const Object& object) const

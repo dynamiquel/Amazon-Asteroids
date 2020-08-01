@@ -11,6 +11,8 @@ class Object
             Vector2Int position;
             // Size is solely for collider.
             Vector2Int size;
+            float rotation = .0f;
+
             int Top() const
             {return position.y - (int)roundf(size.y * .5f);}
             int Bottom() const {return position.y + (int)roundf(size.y * .5f);}
@@ -19,10 +21,9 @@ class Object
         };
 
         Rect rect;
-        float rotation = .0f;
         bool phasable;
         short health = -1;
 
-        Object(const Vector2Int& position, const Vector2Int& size, const bool fromCentre = true);
+        Object(const Vector2Int& position, const Vector2Int& size, const float rotation = .0f, const bool fromCentre = true);
         bool IsColliding(const Object& object) const;
 };

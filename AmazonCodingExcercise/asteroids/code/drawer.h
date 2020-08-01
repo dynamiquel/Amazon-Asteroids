@@ -16,8 +16,9 @@ public:
     ~Drawer();
 
     bool DrawImage(const char* imagePath, int posX = 0, int posY = 0);
-    bool DrawImageCached(const char* img, int posX, int posY, const bool fromCentre = true);
-    bool DrawImageCached(const char* img, const Vector2Int& position, const bool fromCentre = true);
+    bool DrawImageCached(const char* imagePath, int posX, int posY, const float rotation = 0, const bool fromCentre = true);
+    bool DrawImageCached(const char* imagePath, const Vector2Int& position, const float rotation = 0, const bool fromCentre = true);
+    bool DrawImageCached(const char* imagePath, const Object& object, const bool fromCentre = true);
     SDL_Texture* GetTexture(const char* imagePath);
     bool DrawText(const char* fontName, const char* text, float size, int posX, int posY);
 

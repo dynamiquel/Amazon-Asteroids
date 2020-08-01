@@ -34,15 +34,15 @@ void Asteroids::Draw()
 
 void Asteroids::DrawImages()
 {
-    drawer->DrawImageCached("bg.png", 0, 0, false);
-    drawer->DrawImageCached("ship.png", ship->rect.position);
+    drawer->DrawImageCached("bg.png", 0, 0, 0, false);
+    drawer->DrawImageCached("ship.png", *ship);
 
     for (Object& asteroid : asteroids)
-        drawer->DrawImageCached("asteroid.png", asteroid.rect.position);
+        drawer->DrawImageCached("asteroid.png", asteroid);
     for (Object& shot : shots)
-        drawer->DrawImageCached("shot.png", shot.rect.position);
+        drawer->DrawImageCached("shot.png", shot);
     for (Object& enemy : enemies)
-        drawer->DrawImageCached("ship_enemy.png", enemy.rect.position);
+        drawer->DrawImageCached("ship_enemy.png", enemy);
     for (TimedImage& timedImage : timedImages)
         drawer->DrawImageCached(timedImage.imageName, timedImage.position);
 }
@@ -305,7 +305,7 @@ void Asteroids::CreateExplosion(const Vector2Int& position)
 
 Object Asteroids::CreateEnemy(const Vector2Int& position)
 {
-    Object enemy(position, {40, 40});
+    Object enemy(position, {40, 40}, 45.f);
     enemy.health = 1;
     
     return enemy;

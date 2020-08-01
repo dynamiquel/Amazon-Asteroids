@@ -90,13 +90,18 @@ bool Drawer::DrawImage(const char* img, int posX, int posY)
     }
 }
 
-bool Drawer::DrawImageCached(const char* img, const Vector2Int& position, const bool fromCentre)
+bool Drawer::DrawImageCached(const char* img, const Object& object, const bool fromCentre)
 {
-    return DrawImageCached(img, position.x, position.y, fromCentre);
+    return DrawImageCached(img, object.rect.position, object.rect.rotation, fromCentre);
+}
+
+bool Drawer::DrawImageCached(const char* img, const Vector2Int& position, const float rotation, const bool fromCentre)
+{
+    return DrawImageCached(img, position.x, position.y, rotation, fromCentre);
 }
 
 // Draws a texture to the screen, using cached textures.
-bool Drawer::DrawImageCached(const char* img, int posX, int posY, const bool fromCentre)
+bool Drawer::DrawImageCached(const char* img, int posX, int posY, const float rotation, const bool fromCentre)
 {
     // Attempts to get a cached texture with the given image name.
     SDL_Texture* texture = textures->GetTexture(img);
@@ -134,7 +139,7 @@ bool Drawer::DrawImageCached(const char* img, int posX, int posY, const bool fro
     posRect.w = width;
     posRect.h = height;
 
-    SDL_RenderCopy(m_renderer, texture, NULL, &posRect);
+    SDL_RenderCopyEx(m_renderer, texture, NULL, &posRect, rotation, NULL, SDL_FLIP_NONE);
 
     return true;
 }
