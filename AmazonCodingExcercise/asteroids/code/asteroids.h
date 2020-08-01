@@ -7,6 +7,7 @@
 #include "drawer.h"
 #include "object.h"
 #include "vector2int.h"
+#include "timed_image.h"
 
 #include <list>
 
@@ -25,8 +26,10 @@ public:
     void Fire(const float deltaTime);
     void UpdateThrust(const float deltaTime);
     void UpdateHoverEffect(const float deltaTime);
+    void UpdateTimedImages(const float deltaTime);
     void CheckCollisions();
 
+    void CreateExplosion(const Vector2Int& position);
     Object CreateEnemy(const Vector2Int& position);
     Object CreateAsteroid(const Vector2Int& position);
     Object CreateShot(const Vector2Int& position);
@@ -38,10 +41,12 @@ private:
     std::list<Object> shots;
     std::list<Object> asteroids;
     std::list<Object> enemies;
+    std::list<TimedImage> timedImages;
 
     const char scoreString[10] = "Score: %d";
     const char livesString[10] = "Lives: %d";
     const char thrustString[21] = "Thrust: %d%% (%.1fs)";
+    const char explosionImageString[19] = "explosion_00%d.png";
 
     const float fireDelay = .5f;
     float fireDelayTimer = .0f;

@@ -30,6 +30,9 @@
     <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\textures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\timed_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="S:\Users\Liamk\Development\Games\AmazonCodingExcercise\AmazonCodingExcercise\asteroids\code\vector2int.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -7,6 +7,8 @@
 
 #include <SDL.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -17,6 +19,9 @@ bool running;
 
 bool OnStart()
 {
+    // Initialise random seed.
+    srand(time(NULL));
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());

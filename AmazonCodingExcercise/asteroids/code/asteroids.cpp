@@ -8,6 +8,7 @@
 #include <SDL.h>
 #include <limits.h>
 #include <math.h>
+#include <stdlib.h>
 
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
@@ -41,6 +42,8 @@ void Asteroids::DrawImages()
         drawer->DrawImageCached("shot.png", shot.rect.position);
     for (Object& enemy : enemies)
         drawer->DrawImageCached("ship_enemy.png", enemy.rect.position);
+    for (TimedImage& timedImage : timedImages)
+        drawer->DrawImageCached(timedImage.imageName, timedImage.position);
 }
 
 void Asteroids::DrawText()
@@ -72,6 +75,7 @@ void Asteroids::OnUpdate(const float deltaTime)
     UserInput(deltaTime);
     UpdateThrust(deltaTime);
     UpdateHoverEffect(deltaTime);
+    UpdateTimedImages(deltaTime);
     CheckCollisions();
 
     if (lives <= 0)
@@ -96,12 +100,12 @@ void Asteroids::UserInput(const float deltaTime)
     if (keyState[SDL_SCANCODE_LEFT] || keyState[SDL_SCANCODE_KP_4] || keyState[SDL_SCANCODE_A])
     {
         if (ship->rect.position.x > 0)
-            ship->rect.position.x -= normalMoveVelocity;
+            ship->rect.position.x -= moveVelocity;
     }
     if (keyState[SDL_SCANCODE_RIGHT] || keyState[SDL_SCANCODE_KP_6] || keyState[SDL_SCANCODE_D])
     {
         if (ship->rect.position.x < 1280)
-            ship->rect.position.x += normalMoveVelocity;
+            ship->rect.position.x += moveVelocity;
     }
     if (keyState[SDL_SCANCODE_UP] || keyState[SDL_SCANCODE_KP_8] || keyState[SDL_SCANCODE_W])
     {
@@ -175,10 +179,15 @@ void Asteroids::CheckCollisions()
         {
             if (itr->IsColliding(*shotItr))
             {
-                asteroids.erase(itr++);
                 shots.erase(shotItr++);
                 shotDestroyed = true;
-                score++;
+
+                if ((itr->health--) <= 1)
+                {
+                    asteroids.erase(itr++);
+                    score++;
+                }
+                
                 break;
             }
             else
@@ -194,10 +203,16 @@ void Asteroids::CheckCollisions()
         {
             if (itr->IsColliding(*shotItr))
             {
-                enemies.erase(itr++);
                 shots.erase(shotItr++);
                 shotDestroyed = true;
-                score += 2;
+                
+                if ((itr->health--) <= 1)
+                {
+                    CreateExplosion(itr->rect.position);
+                    enemies.erase(itr++);
+                    score += 2;
+                }
+
                 break;
             }
             else
@@ -261,6 +276,25 @@ void Asteroids::UpdateHoverEffect(const float deltaTime)
 
         hoverDirectionDelayTimer = .0f;
     }
+}
+
+void Asteroids::UpdateTimedImages(const float deltaTime)
+{
+    for (auto itr = timedImages.begin(); itr != timedImages.end();)
+    {
+        if ((itr->lifeTime -= deltaTime) <= .0f)
+            timedImages.erase(itr++);
+        else
+            ++itr;
+    }
+}
+
+void Asteroids::CreateExplosion(const Vector2Int& position)
+{
+    int index = rand() % 9;
+    char* str2 = new char[19];
+    sprintf(str2, explosionImageString, index);
+    timedImages.push_back(TimedImage {str2, position, .25f});
 }
 
 Object Asteroids::CreateEnemy(const Vector2Int& position)
