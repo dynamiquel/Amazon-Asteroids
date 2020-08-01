@@ -1,6 +1,7 @@
 [Add your work here and the estimate amount of time spent(remember that there is no hard time limit)]
 Time spent:
 
+Day 1
 1. Changed the SDL_Renderer from SDL_RENDERER_SOFTWARE to SDL_RENDERER_ACCELERATED.
 2. Changed SDL_Delay from 1 to 1000 / 200 (~200 fps) to make tick-based executions more consistent. 
    I chose 200 fps as most computers should be able to handle it and it makes the game feel smooth on higher refresh rate monitors.
@@ -28,7 +29,14 @@ Time spent:
 12. Increased window size to 1280x1024 (bg.png resolution).
 ====== 6 hours ======
 Day 2
-13. Shots that collide with asteroids are destroyed.
-14. Added enemies.
+13. Added enemies.
+14. Shots that collide with asteroids and enemies are destroyed.
 15. When the player collides with an asteroid or enemy, they lose a life and are set back to spawn position.
 16. The player can no longer leave the window boundaries.
+====== 2 hours ======
+Day 3
+17. Added Thrust. Because physics, thrust only applies to forward movement. The amount of thrust is based on seconds using Asteroids.thurstTime.
+    When some thrust is deplated, a countdown starts and when it finishes, the thrust slowly replenishes.
+    If thrust is used whiles it is replenishing, replenishing stops and the countdown starts again.
+18. Added mouse input for firing.
+19. Added a slight hover effect to the ship. This should make the game feel more alive.

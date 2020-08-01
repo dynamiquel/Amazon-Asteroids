@@ -157,18 +157,26 @@ SDL_Texture* Drawer::GetTexture(const char* img)
     }
 }
 
-bool Drawer::DrawText(const char* font, const char* text, float size, int posX, int posY)
+bool Drawer::DrawText(const char* fontName, const char* text, float size, int posX, int posY)
 {
-    STBTTF_Font* stbFont = STBTTF_OpenFont(m_renderer, font, size);
-    if (stbFont)
+    // Attempts to get a cached font with the given font name.
+    STBTTF_Font* stbFont = (STBTTF_Font*)textures->GetFont(fontName);
+
+    // No cached font with the given image name.
+    if (stbFont == nullptr)
     {
-        SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-        STBTTF_RenderText(m_renderer, stbFont, posX, posY, text);
-        return true;
+        stbFont = STBTTF_OpenFont(m_renderer, fontName, size);
+
+        if (!stbFont)
+        {
+            SDL_Log("Error loading font: %s", fontName);
+            return false;
+        }
+
+        textures->AddFont(fontName, (void*)stbFont);
     }
-    else
-    {
-        SDL_Log("Error loading font: %s", font);
-        return false;
-    }
+
+    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+    STBTTF_RenderText(m_renderer, stbFont, posX, posY, text);
+    return true;
 }

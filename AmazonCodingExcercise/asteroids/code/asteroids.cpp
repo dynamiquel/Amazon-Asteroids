@@ -15,6 +15,44 @@
     return newAsteroids;
 }
 
+Asteroids::~Asteroids()
+{
+    ship = nullptr;
+    shots.clear();
+    asteroids.clear();
+    enemies.clear();
+}
+
+void Asteroids::Draw()
+{
+    DrawImages();
+    DrawText();
+}
+
+void Asteroids::DrawImages()
+{
+    drawer->DrawImageCached("bg.png", 0, 0, false);
+    drawer->DrawImageCached("ship.png", ship->rect.position);
+
+    for (Object& asteroid : asteroids)
+        drawer->DrawImageCached("asteroid.png", asteroid.rect.position);
+    for (Object& shot : shots)
+        drawer->DrawImageCached("shot.png", shot.rect.position);
+    for (Object& enemy : enemies)
+        drawer->DrawImageCached("ship_enemy.png", enemy.rect.position);
+}
+
+void Asteroids::DrawText()
+{
+    char str2[20];
+
+    sprintf(str2, scoreString, score);
+    drawer->DrawText("arial.ttf", str2, 40, 20, 50);
+    
+    sprintf(str2, livesString, lives);
+    drawer->DrawText("arial.ttf", str2, 40, 20, 100);
+}
+
 void Asteroids::OnStart()
 {
     ship = new Object( {640, 850}, {40, 40} );
@@ -25,7 +63,11 @@ void Asteroids::OnStart()
 
 void Asteroids::OnUpdate(const float deltaTime)
 {
+    fireDelayTimer += deltaTime;
+
     UserInput(deltaTime);
+    UpdateThrust(deltaTime);
+    UpdateHoverEffect(deltaTime);
     CheckCollisions();
 
     if (lives <= 0)
@@ -37,38 +79,45 @@ void Asteroids::OnUpdate(const float deltaTime)
 
 void Asteroids::UserInput(const float deltaTime)
 {
-    const Uint8* keystate = SDL_GetKeyboardState(nullptr);
+    const Uint8* keyState = SDL_GetKeyboardState(NULL);
+    const Uint32 mouseState = SDL_GetMouseState(NULL, NULL);
 
-    if (keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_KP_4] || keystate[SDL_SCANCODE_A])
+    if (keyState[SDL_SCANCODE_LSHIFT] && (thrustTimeTimer + deltaTime) <= thrustTime)
+    {
+        moveVelocity = thrustMoveVelocity;
+        thrustTimeTimer += deltaTime;
+    }
+    else
+        moveVelocity = normalMoveVelocity;    
+    if (keyState[SDL_SCANCODE_LEFT] || keyState[SDL_SCANCODE_KP_4] || keyState[SDL_SCANCODE_A])
     {
         if (ship->rect.position.x > 0)
-            ship->rect.position.x -= moveVelocity;
+            ship->rect.position.x -= normalMoveVelocity;
     }
-    if (keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_KP_6] || keystate[SDL_SCANCODE_D])
+    if (keyState[SDL_SCANCODE_RIGHT] || keyState[SDL_SCANCODE_KP_6] || keyState[SDL_SCANCODE_D])
     {
         if (ship->rect.position.x < 1280)
-            ship->rect.position.x += moveVelocity;
+            ship->rect.position.x += normalMoveVelocity;
     }
-    if (keystate[SDL_SCANCODE_UP] || keystate[SDL_SCANCODE_KP_8] || keystate[SDL_SCANCODE_W])
+    if (keyState[SDL_SCANCODE_UP] || keyState[SDL_SCANCODE_KP_8] || keyState[SDL_SCANCODE_W])
     {
         if (ship->rect.position.y > 0)
             ship->rect.position.y -= moveVelocity;
     }
-    if (keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_KP_5] || keystate[SDL_SCANCODE_S])
+    if (keyState[SDL_SCANCODE_DOWN] || keyState[SDL_SCANCODE_KP_5] || keyState[SDL_SCANCODE_S])
     {
         if (ship->rect.position.y < 1024)
-            ship->rect.position.y += moveVelocity;
+            ship->rect.position.y += normalMoveVelocity;
     }
-    if (keystate[SDL_SCANCODE_KP_7] || keystate[SDL_SCANCODE_Q])
+    if (keyState[SDL_SCANCODE_KP_7] || keyState[SDL_SCANCODE_Q])
     {
         // Rotate left.
     }
-    if (keystate[SDL_SCANCODE_KP_9] || keystate[SDL_SCANCODE_E])
+    if (keyState[SDL_SCANCODE_KP_9] || keyState[SDL_SCANCODE_E])
     {
         // Rotate right.
     }
-
-    if (keystate[SDL_SCANCODE_SPACE] || keystate[SDL_SCANCODE_KP_0])
+    if (keyState[SDL_SCANCODE_SPACE] || keyState[SDL_SCANCODE_KP_0] || mouseState & SDL_BUTTON(SDL_BUTTON_LEFT))
     {
         Fire(deltaTime);
     }
@@ -76,7 +125,7 @@ void Asteroids::UserInput(const float deltaTime)
 
 void Asteroids::Fire(const float deltaTime)
 {
-    if ((fireDelayTimer += deltaTime) >= fireDelay)
+    if (fireDelayTimer >= fireDelay)
     {
         shots.push_back(CreateShot( {ship->rect.position.x, ship->rect.Top()} ));
         fireDelayTimer = 0.0f;
@@ -116,7 +165,7 @@ void Asteroids::CheckCollisions()
 
     for (auto shotItr = shots.begin(); shotItr != shots.end();)
     {
-        bool increase = true;
+        bool shotDestroyed = false;
 
         for (auto itr = asteroids.begin(); itr != asteroids.end();)
         {
@@ -124,7 +173,8 @@ void Asteroids::CheckCollisions()
             {
                 asteroids.erase(itr++);
                 shots.erase(shotItr++);
-                increase = false;
+                shotDestroyed = true;
+                score++;
                 break;
             }
             else
@@ -132,6 +182,9 @@ void Asteroids::CheckCollisions()
                 ++itr;
             }
         }
+
+        if (shotDestroyed)
+            continue;
 
         for (auto itr = enemies.begin(); itr != enemies.end();)
         {
@@ -139,7 +192,8 @@ void Asteroids::CheckCollisions()
             {
                 enemies.erase(itr++);
                 shots.erase(shotItr++);
-                increase = false;
+                shotDestroyed = true;
+                score++;
                 break;
             }
             else
@@ -148,29 +202,61 @@ void Asteroids::CheckCollisions()
             }
         }
 
-        if (increase)
-            ++shotItr;
+        if (shotDestroyed)
+            continue;
+
+        ++shotItr;
     }
 }
 
-void Asteroids::Draw()
+void Asteroids::UpdateThrust(const float deltaTime)
 {
-    drawer->DrawImageCached("bg.png", 0, 0, false);
-    drawer->DrawImageCached("ship.png", ship->rect.position);
+    if (thrustTimeTimer > 0.1f && (thrustRechargeDelayTimer += deltaTime) >= thrustRechargeDelay)
+    {
+        if (thrustTimeTimer < prevThrustTime)
+        {
+            prevThrustTime = thrustTimeTimer;
+            thrustTimeTimer -= deltaTime * .25f;
 
-    for (Object& asteroid : asteroids)
-    {
-        drawer->DrawImageCached("asteroid.png", asteroid.rect.position);
+            if (thrustTimeTimer <= 0.1f)
+            {
+                thrustRechargeDelayTimer = .0f;
+                prevThrustTime = 1000.f;
+            }
+        }
+        else
+        {
+            thrustRechargeDelayTimer = .0f;
+            prevThrustTime = 1000.f;
+        }
     }
-    for (Object& shot : shots)
+}
+
+void Asteroids::UpdateHoverEffect(const float deltaTime)
+{
+    if ((hoverDirectionDelayTimer += deltaTime) >= hoverDirectionDelay)
     {
-        drawer->DrawImageCached("shot.png", shot.rect.position);
+        switch (hoverDirection)
+        {
+            case 0:
+                ship->rect.position.x -= 2;
+                break;
+            case 1:
+                ship->rect.position.y -= 2;
+                break;
+            case 2:
+                ship->rect.position.x += 2;
+                break;
+            case 3:
+                ship->rect.position.y += 2;
+                break;
+        }
+
+        if ((hoverDirection++) > 3)
+            hoverDirection = 0;
+
+        hoverDirectionDelayTimer = .0f;
     }
-    for (Object& enemy : enemies)
-    {
-        drawer->DrawImageCached("ship_enemy.png", enemy.rect.position);
-    }
-    //drawer->DrawText("arial.ttf", "Score: 0", 40, 20, 50);
 }
 
 Object Asteroids::CreateEnemy(const Vector2Int& position)

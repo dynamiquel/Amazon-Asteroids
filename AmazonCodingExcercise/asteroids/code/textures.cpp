@@ -30,7 +30,32 @@ void Textures::RemoveTexture(const char* textureName)
     textures.erase(textureName);
 }
 
+void* Textures::GetFont(const char* fontName)
+{
+    auto pos = fonts.find(fontName);
+
+    if (pos == fonts.end())
+    {
+        SDL_Log("Could not font with name: %s", fontName);
+        return nullptr;
+    }
+        return pos->second;
+
+}
+
+// Adds a texture to the texture map so it can be reused.
+void Textures::AddFont(const char* fontName, void* font)
+{
+    fonts[fontName] = font;
+}
+
+void Textures::RemoveFont(const char* fontName)
+{
+    fonts.erase(fontName);
+}
+
 void Textures::Clear()
 {
     textures.clear();
+    fonts.clear();
 }

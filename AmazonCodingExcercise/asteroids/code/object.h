@@ -20,7 +20,6 @@ class Object
 
         Rect rect;
         float rotation = .0f;
-        const char* textureId;
         bool phasable;
         short health = -1;
 
