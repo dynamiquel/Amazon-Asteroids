@@ -12,6 +12,7 @@ class AIController
 
     protected:
         // Firing.
-        const float fireDelay = .5f;
+        const float fireMinDelay = .5f;
+        const float fireMaxDelay = 1.5f;
         float fireDelayTimer = .0f;
 };

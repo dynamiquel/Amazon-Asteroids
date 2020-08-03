@@ -32,6 +32,7 @@ public:
     void UpdateTimedImages(const float deltaTime);
     void CheckCollisions();
     void KillPlayer();
+    void SpawnEnemy();
 
     void CreateExplosion(const Vector2Int& position);
     AIController CreateEnemy(const Vector2Int& position);
@@ -56,6 +57,14 @@ private:
     int8_t lives = maxLives;
     uint16_t score = 0;
 
+    // Player immunity / spawn protection.
     const float immunityTime = 1.f;
     float immunityTimeTimer = .0f;
+
+    // Enemy spawner.
+    const float enemyMinSpawnRate = 4.f;
+    const float enemyMaxSpawnRate = 10.f;
+    float enemySpawnRateTimer = .0f;
+    // The higher the difficulty, the faster enemies spawn.
+    float difficulty = 1.f;
 };

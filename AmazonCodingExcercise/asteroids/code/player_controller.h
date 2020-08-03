@@ -30,7 +30,7 @@ class PlayerController
         uint8_t moveVelocity = normalMoveVelocity;
         const float thrustTime = 1.f;
         float thrustTimeTimer = .0f;
-        const float thrustRechargeDelay = 5.f;
+        const float thrustRechargeDelay = 4.f;
         float thrustRechargeDelayTimer = .0f;
         float prevThrustTime = 1000.f;
 

@@ -69,9 +69,6 @@ void Asteroids::DrawText()
 void Asteroids::OnStart()
 {
     player = new PlayerController();
-
-    asteroids.push_back(CreateAsteroid( {200, 100} ));
-    enemies.push_back(CreateEnemy( {640, 100} ));
 }
 
 void Asteroids::OnUpdate(const float deltaTime)
@@ -87,13 +84,31 @@ void Asteroids::OnUpdate(const float deltaTime)
 
         // Destroys enemy ships that are out of range.
         if (itr->ship->rect.position.y >= 1040)
+        {
             enemies.erase(itr++);
+            lives--;
+        }
+        else
+            ++itr;
+    }
+
+    for (auto itr = asteroids.begin(); itr != asteroids.end();)
+    {
+        itr->rect.position.y++;
+        // Destroys enemy ships that are out of range.
+        if (itr->rect.position.y >= 1040)
+        {
+            asteroids.erase(itr++);
+        }
         else
             ++itr;
     }
 
     UpdateTimedImages(deltaTime);
     CheckCollisions();
+    
+    if ((enemySpawnRateTimer -= deltaTime) <= 0)
+        SpawnEnemy();
 
     if (lives <= 0)
     {
@@ -262,6 +277,30 @@ void Asteroids::KillPlayer()
     player->ship->rect.position = Vector2Int { 640, 850 };
     // Makes the player immune for a bit to prevent spawn killing.
     immunityTimeTimer = immunityTime;
+}
+
+// Responsible for spawning in an enemy ship or asteroid.
+// A delay is then chosen before spawning the next enemy.
+// Difficulty is increased.
+void Asteroids::SpawnEnemy()
+{
+    // Chooses a random X position for the enemy to spawn at.
+    int randomXPos = rand() % 1270 + 10;
+
+    // 1 in 5 chance of an asteroid spawning.
+    // 4 in 5 chance of an enemy ship spawning.
+    if ((rand() % 5) >= 1)
+        enemies.push_back(CreateEnemy({randomXPos, -40}));
+    else
+        asteroids.push_back(CreateAsteroid({randomXPos, -40}));
+
+    // Chooses when the next enemy spawns by choosing a random number between enemyMaxSpawnRate and enemyMinSpawnRate.
+    // Result is then divided by difficulty to make enemies spawn faster as time goes on.
+    enemySpawnRateTimer = (enemyMinSpawnRate 
+        + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX/(enemyMaxSpawnRate - enemyMinSpawnRate))))
+        / difficulty;
+
+    difficulty *= 1.02f;
 }
 
 // Chooses a random explosion image and adds it to the timedImages list.

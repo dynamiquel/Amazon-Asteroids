@@ -59,3 +59,5 @@ Day 5
 29. Added a new 'shots' list called 'enemyShots'. This list works similar to 'shots' but contains shots fired from enemy ships.
     When these enemyShots hit the player's ship, the player loses a life.
 30. Short-term immunity is given to the player when they die. This prevents spawn-killing.
+31. Enemy ships that make it past the window are removed and the player loses a life.
+32. Enemy ships and asteroids spawn in a random X position. The spawn rate is chosen within a range. Spawn rate increases overtime to increase difficulty.
