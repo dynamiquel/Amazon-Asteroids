@@ -6,7 +6,7 @@
 
 #include "drawer.h"
 #include "object.h"
-#include "vector2int.h"
+#include "vector2.h"
 #include "timed_image.h"
 #include "player_controller.h"
 #include "ai_controller.h"
@@ -33,10 +33,11 @@ public:
     void CheckCollisions();
     void KillPlayer();
     void SpawnEnemy();
+    void OnEnd();
 
-    void CreateExplosion(const Vector2Int& position);
-    AIController CreateEnemy(const Vector2Int& position);
-    Object CreateAsteroid(const Vector2Int& position);
+    void CreateExplosion(const Vector2& position);
+    AIController CreateEnemyShip(const Vector2& position);
+    Object CreateAsteroid(const Vector2& position);
 
 private:
     Drawer* drawer;

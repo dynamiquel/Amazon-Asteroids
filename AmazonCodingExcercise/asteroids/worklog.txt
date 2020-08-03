@@ -52,7 +52,7 @@ Day 3
     By using SDL_RenderCopyEx() instead of SDL_RenderCopy(), images can now be rotated.
 ====== 4 hours ======
 
-Day 5
+Day 4
 26. Moved ship functionality into the Ship class. Ship inherits from Object with three additional methods: Move, Fire and UpdateHoverEffect.
 27. Moved ship controls (user input) into the PlayerController class. This class is responsible for controlling the Ships and listening to user input.
 28. Added basic AI by creating an AIController class. This class functions similarly to the PlayerController.
@@ -61,3 +61,5 @@ Day 5
 30. Short-term immunity is given to the player when they die. This prevents spawn-killing.
 31. Enemy ships that make it past the window are removed and the player loses a life.
 32. Enemy ships and asteroids spawn in a random X position. The spawn rate is chosen within a range. Spawn rate increases overtime to increase difficulty.
+33. The fire delay for enemy ships is chosen within a range for each shot. This should make the game feel less predictable.
+34. Using floats to represent position as this can allow for smaller adjustments. Previously, the minimum speed was 200 pixels / second.

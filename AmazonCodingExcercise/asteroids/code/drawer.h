@@ -7,7 +7,7 @@
 #include <SDL.h>
 #include "textures.h"
 #include "object.h"
-#include "vector2int.h"
+#include "vector2.h"
 
 class Drawer
 {
@@ -16,7 +16,7 @@ public:
     ~Drawer();
 
     bool DrawImage(const char* imagePath, int posX, int posY, const float rotation = 0, const bool fromCentre = true);
-    bool DrawImage(const char* imagePath, const Vector2Int& position, const float rotation = 0, const bool fromCentre = true);
+    bool DrawImage(const char* imagePath, const Vector2& position, const float rotation = 0, const bool fromCentre = true);
     bool DrawImage(const char* imagePath, const Object& object, const bool fromCentre = true);
     SDL_Texture* GetTexture(const char* imagePath);
     bool DrawText(const char* fontName, const char* text, float size, int posX, int posY);

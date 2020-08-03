@@ -42,22 +42,22 @@ void PlayerController::UserInput(const float deltaTime)
     if (keyState[SDL_SCANCODE_LEFT] || keyState[SDL_SCANCODE_KP_4] || keyState[SDL_SCANCODE_A])
     {
         if (ship->rect.position.x > 10)
-            ship->rect.position.x -= moveVelocity;
+            ship->rect.position.x -= moveVelocity * deltaTime;
     }
     if (keyState[SDL_SCANCODE_RIGHT] || keyState[SDL_SCANCODE_KP_6] || keyState[SDL_SCANCODE_D])
     {
         if (ship->rect.position.x < 1270)
-            ship->rect.position.x += moveVelocity;
+            ship->rect.position.x += moveVelocity * deltaTime;
     }
     if (keyState[SDL_SCANCODE_UP] || keyState[SDL_SCANCODE_KP_8] || keyState[SDL_SCANCODE_W])
     {
         if (ship->rect.position.y > 10)
-            ship->rect.position.y -= moveVelocity;
+            ship->rect.position.y -= moveVelocity * deltaTime;
     }
     if (keyState[SDL_SCANCODE_DOWN] || keyState[SDL_SCANCODE_KP_5] || keyState[SDL_SCANCODE_S])
     {
         if (ship->rect.position.y < 1014)
-            ship->rect.position.y += normalMoveVelocity;
+            ship->rect.position.y += normalMoveVelocity * deltaTime;
     }
     if (keyState[SDL_SCANCODE_KP_7] || keyState[SDL_SCANCODE_Q])
     {

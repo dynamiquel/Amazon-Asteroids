@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-Object::Object(const Vector2Int& position, const Vector2Int& size, const float rotation, const bool fromCentre)
+Object::Object(const Vector2& position, const Vector2& size, const float rotation, const bool fromCentre)
 {
     if (fromCentre)
     {

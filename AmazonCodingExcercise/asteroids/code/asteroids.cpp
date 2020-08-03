@@ -4,6 +4,7 @@
 
 #include "asteroids.h"
 #include "drawer.h"
+#include "main.h"
 
 #include <SDL.h>
 #include <limits.h>
@@ -50,6 +51,9 @@ void Asteroids::DrawImages()
         drawer->DrawImage("ship_enemy.png", *(enemy.ship));
     for (TimedImage& timedImage : timedImages)
         drawer->DrawImage(timedImage.imageName, timedImage.position);
+
+    if (lives <= 0)
+        drawer->DrawText("arial.ttf", "Game Over!", 80, 450, 400);
 }
 
 void Asteroids::DrawText()
@@ -71,8 +75,12 @@ void Asteroids::OnStart()
     player = new PlayerController();
 }
 
+// All OnUpdates = once per frame.
 void Asteroids::OnUpdate(const float deltaTime)
 {
+    if (lives <= 0)
+        return OnEnd();
+
     // Reduces the immunity time the player has.
     immunityTimeTimer -= deltaTime;
 
@@ -94,7 +102,7 @@ void Asteroids::OnUpdate(const float deltaTime)
 
     for (auto itr = asteroids.begin(); itr != asteroids.end();)
     {
-        itr->rect.position.y++;
+        itr->rect.position.y += 30.f * deltaTime;
         // Destroys enemy ships that are out of range.
         if (itr->rect.position.y >= 1040)
         {
@@ -109,12 +117,6 @@ void Asteroids::OnUpdate(const float deltaTime)
     
     if ((enemySpawnRateTimer -= deltaTime) <= 0)
         SpawnEnemy();
-
-    if (lives <= 0)
-    {
-        SDL_Log("Player dead.");
-        // Respawn player.
-    }
 }
 
 void Asteroids::CheckCollisions()
@@ -140,7 +142,7 @@ void Asteroids::CheckCollisions()
     // Destroys shots that are out of range. Prevents memory issues.
     for (auto itr = shots.begin(); itr != shots.end();)
     {
-        if ((itr->rect.position.y--) <= INT_MIN)
+        if ((itr->rect.position.y--) <= FLT_MIN)
             shots.erase(itr++);
         else
             ++itr;        
@@ -148,13 +150,13 @@ void Asteroids::CheckCollisions()
 
     for (auto itr = enemyShots.begin(); itr != enemyShots.end();)
     {
-        if ((itr->rect.position.y++) >= INT_MAX)
+        if ((itr->rect.position.y++) >= FLT_MAX)
             enemyShots.erase(itr++);
         else
             ++itr;        
     }
 
-    // Checks collisions between shots and enemies, and destroys objects if required.
+    // Checks collisions between player shots and (enemies and asteroids), and destroys objects if required.
     for (auto shotItr = shots.begin(); shotItr != shots.end();)
     {
         bool shotDestroyed = false;
@@ -211,6 +213,7 @@ void Asteroids::CheckCollisions()
         ++shotItr;
     }
 
+    // Checks collisions between enemy shots and (player and asteroids), and destroys objects if required.
     for (auto shotItr = enemyShots.begin(); shotItr != enemyShots.end();)
     {
         bool shotDestroyed = false;
@@ -239,6 +242,7 @@ void Asteroids::CheckCollisions()
         if (shotDestroyed)
             continue;
 
+        // Only damage player if the player is no longer immune.
         if (immunityTimeTimer <= 0 && shotItr->IsColliding(*(player->ship)))
         {
             enemyShots.erase(shotItr++);
@@ -274,8 +278,9 @@ void Asteroids::KillPlayer()
 {
     lives--;
     CreateExplosion(player->ship->rect.position);
-    player->ship->rect.position = Vector2Int { 640, 850 };
-    // Makes the player immune for a bit to prevent spawn killing.
+    // Moves the player's ship back to spawn.
+    player->ship->rect.position = Vector2 { 640, 850 };
+    // Makes the player immune for a bit to prevent spawn-killing.
     immunityTimeTimer = immunityTime;
 }
 
@@ -285,12 +290,12 @@ void Asteroids::KillPlayer()
 void Asteroids::SpawnEnemy()
 {
     // Chooses a random X position for the enemy to spawn at.
-    int randomXPos = rand() % 1270 + 10;
+    float randomXPos = static_cast<float>(rand() % 1270 + 10);
 
-    // 1 in 5 chance of an asteroid spawning.
-    // 4 in 5 chance of an enemy ship spawning.
-    if ((rand() % 5) >= 1)
-        enemies.push_back(CreateEnemy({randomXPos, -40}));
+    // 1 in 4 chance of an asteroid spawning.
+    // 3 in 4 chance of an enemy ship spawning.
+    if ((rand() % 4) >= 1)
+        enemies.push_back(CreateEnemyShip({randomXPos, -40}));
     else
         asteroids.push_back(CreateAsteroid({randomXPos, -40}));
 
@@ -303,8 +308,13 @@ void Asteroids::SpawnEnemy()
     difficulty *= 1.02f;
 }
 
+void Asteroids::OnEnd()
+{
+    
+}
+
 // Chooses a random explosion image and adds it to the timedImages list.
-void Asteroids::CreateExplosion(const Vector2Int& position)
+void Asteroids::CreateExplosion(const Vector2& position)
 {
     int index = rand() % 9;
     char* formattedString = new char[19];
@@ -312,12 +322,12 @@ void Asteroids::CreateExplosion(const Vector2Int& position)
     timedImages.push_back(TimedImage {formattedString, position, .25f});
 }
 
-AIController Asteroids::CreateEnemy(const Vector2Int& position)
+AIController Asteroids::CreateEnemyShip(const Vector2& position)
 {
     return AIController(position, 180);
 }
 
-Object Asteroids::CreateAsteroid(const Vector2Int& position)
+Object Asteroids::CreateAsteroid(const Vector2& position)
 {
     Object asteroid(position, {120, 100});
     asteroid.health = 3;

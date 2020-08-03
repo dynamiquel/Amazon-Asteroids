@@ -1,11 +1,11 @@
 #include "ship.h"
 
-Ship::Ship(const Vector2Int& position, const float rotation) : Object(position, {40, 40}, rotation, true)
+Ship::Ship(const Vector2& position, const float rotation) : Object(position, {40, 40}, rotation, true)
 {
     health = 1;
 }
 
-/*static*/ Object Ship::CreateShot(const Vector2Int& position, const float rotation)
+/*static*/ Object Ship::CreateShot(const Vector2& position, const float rotation)
 {
     return Object(position, {15, 25}, rotation);
 }
@@ -20,7 +20,7 @@ Object Ship::Fire()
     return CreateShot(rect.position, rect.rotation);
 }
 
-void Ship::Move(const Vector2Int& moveBy)
+void Ship::Move(const Vector2& moveBy)
 {
     rect.position.x += moveBy.x;
     rect.position.y += moveBy.y;

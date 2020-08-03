@@ -2,6 +2,7 @@
 // Disclaimer: This code is intentionally written to a substandard quality and
 // is not representative of Amazon coding standards or Amazon best practices.
 
+#include "main.h"
 #include "drawer.h"
 #include "asteroids.h"
 
@@ -15,7 +16,8 @@ SDL_Renderer* renderer;
 Drawer* drawer;
 Asteroids* asteroids;
 float lastFrame;
-bool running;
+
+bool Main::running = false;
 
 bool OnStart()
 {
@@ -51,7 +53,7 @@ bool OnStart()
     asteroids->OnStart();
 
     lastFrame = (float) SDL_GetTicks() * 0.001f;
-    running = true;
+    Main::running = true;
 
     return true;
 }
@@ -63,7 +65,7 @@ void OnUpdate()
     // Checks if the user pressed the Close button.
     if (SDL_PollEvent(&currentEvent) && currentEvent.type == SDL_QUIT)
     {
-        running = false;
+        Main::running = false;
         return;
     }
     
@@ -104,7 +106,7 @@ int OnExit()
 int main(int argc, char *argv[])
 {
     if (OnStart())
-        while (running)
+        while (Main::running)
             OnUpdate();
     
     return OnExit();

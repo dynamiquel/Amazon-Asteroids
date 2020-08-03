@@ -25,9 +25,9 @@ class PlayerController
         float fastFireChargeDelayTimer = .0f;
 
         // Movement.
-        const uint8_t normalMoveVelocity = 1;
-        const uint8_t thrustMoveVelocity = 3;
-        uint8_t moveVelocity = normalMoveVelocity;
+        const float normalMoveVelocity = 200.f;
+        const float thrustMoveVelocity = 600.f;
+        float moveVelocity = normalMoveVelocity;
         const float thrustTime = 1.f;
         float thrustTimeTimer = .0f;
         const float thrustRechargeDelay = 4.f;

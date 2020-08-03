@@ -1,8 +1,8 @@
-#include "vector2int.h"
+#include "vector2.h"
 
 struct TimedImage
 {
     const char* imageName;
-    const Vector2Int position;
+    const Vector2 position;
     float lifeTime;
 };

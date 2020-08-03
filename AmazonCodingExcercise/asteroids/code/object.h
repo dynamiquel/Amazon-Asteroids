@@ -1,16 +1,16 @@
 #pragma once
 
 #include <math.h>
-#include "vector2int.h"
+#include "vector2.h"
 
 class Object
 {
     public:
         struct Rect
         {
-            Vector2Int position;
+            Vector2 position;
             // Size is solely for collider.
-            Vector2Int size;
+            Vector2 size;
             float rotation = .0f;
 
             int Top() const
@@ -24,6 +24,6 @@ class Object
         bool phasable;
         short health = -1;
 
-        Object(const Vector2Int& position, const Vector2Int& size, const float rotation = .0f, const bool fromCentre = true);
+        Object(const Vector2& position, const Vector2& size, const float rotation = .0f, const bool fromCentre = true);
         bool IsColliding(const Object& object) const;
 };

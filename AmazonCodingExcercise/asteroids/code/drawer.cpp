@@ -64,7 +64,7 @@ bool Drawer::DrawImage(const char* img, const Object& object, const bool fromCen
     return DrawImage(img, object.rect.position, object.rect.rotation, fromCentre);
 }
 
-bool Drawer::DrawImage(const char* img, const Vector2Int& position, const float rotation, const bool fromCentre)
+bool Drawer::DrawImage(const char* img, const Vector2& position, const float rotation, const bool fromCentre)
 {
     return DrawImage(img, position.x, position.y, rotation, fromCentre);
 }
