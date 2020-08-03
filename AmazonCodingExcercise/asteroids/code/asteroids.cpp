@@ -81,8 +81,16 @@ void Asteroids::OnUpdate(const float deltaTime)
 
     player->OnUpdate(deltaTime);
     
-    for (AIController& enemy : enemies)
-        enemy.OnUpdate(deltaTime);
+    for (auto itr = enemies.begin(); itr != enemies.end();)
+    {
+        itr->OnUpdate(deltaTime);
+
+        // Destroys enemy ships that are out of range.
+        if (itr->ship->rect.position.y >= 1040)
+            enemies.erase(itr++);
+        else
+            ++itr;
+    }
 
     UpdateTimedImages(deltaTime);
     CheckCollisions();
@@ -99,12 +107,14 @@ void Asteroids::CheckCollisions()
     // If player has no immunity left.
     if (immunityTimeTimer <= 0)
     {
+        // Player hits asteroid.
         for (Object& asteroid : asteroids)
         {
             if (asteroid.IsColliding(*(player->ship)))
                 KillPlayer();
         }
 
+        // Player hits enemy ship.
         for (AIController& enemy : enemies)
         {
             if (enemy.ship->IsColliding(*(player->ship)))

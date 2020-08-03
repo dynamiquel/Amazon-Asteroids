@@ -51,3 +51,11 @@ Day 3
 25. Renamed Drawer.DrawImageCached() to Drawer.DrawImage() and added float rotation to be a parameter.
     By using SDL_RenderCopyEx() instead of SDL_RenderCopy(), images can now be rotated.
 ====== 4 hours ======
+
+Day 5
+26. Moved ship functionality into the Ship class. Ship inherits from Object with three additional methods: Move, Fire and UpdateHoverEffect.
+27. Moved ship controls (user input) into the PlayerController class. This class is responsible for controlling the Ships and listening to user input.
+28. Added basic AI by creating an AIController class. This class functions similarly to the PlayerController.
+29. Added a new 'shots' list called 'enemyShots'. This list works similar to 'shots' but contains shots fired from enemy ships.
+    When these enemyShots hit the player's ship, the player loses a life.
+30. Short-term immunity is given to the player when they die. This prevents spawn-killing.
