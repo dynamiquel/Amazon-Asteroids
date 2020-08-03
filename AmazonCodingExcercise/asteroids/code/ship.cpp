@@ -1,15 +1,23 @@
 #include "ship.h"
+#include "asteroids.h"
 
 Ship::Ship(const Vector2Int& position, const float rotation) : Object(position, {40, 40}, rotation, true)
 {
     health = 1;
 }
 
-Object Ship::Fire()
+/*static*/ Object Ship::CreateShot(const Vector2Int& position)
 {
-    Object shot(rect.position, {15, 25});
+    Object shot(position, {15, 25});
 
     return shot;
+}
+
+Object& Ship::Fire()
+{
+    Asteroids::shots.push_back(CreateShot(rect.position));
+    
+    return Asteroids::shots.back();
 }
 
 void Ship::Move(const Vector2Int& moveBy)

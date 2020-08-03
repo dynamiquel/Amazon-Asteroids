@@ -21,7 +21,7 @@ std::list<Object> Asteroids::shots = std::list<Object>();
 
 Asteroids::~Asteroids()
 {
-    delete ship;
+    delete player;
     shots.clear();
     asteroids.clear();
     enemies.clear();
@@ -37,7 +37,7 @@ void Asteroids::Draw()
 void Asteroids::DrawImages()
 {
     drawer->DrawImage("bg.png", 0, 0, 0, false);
-    drawer->DrawImage("ship.png", *ship);
+    drawer->DrawImage("ship.png", *(player->ship));
 
     for (Object& asteroid : asteroids)
         drawer->DrawImage("asteroid.png", asteroid);
@@ -59,13 +59,13 @@ void Asteroids::DrawText()
     sprintf(formattedString, livesString, lives);
     drawer->DrawText("arial.ttf", formattedString, 40, 20, 100);
 
-    sprintf(formattedString, thrustString, (int)roundf((1 - (thrustTimeTimer * 1 / thrustTime)) * 100), thrustRechargeDelay - thrustRechargeDelayTimer);
+    sprintf(formattedString, thrustString, player->GetThrustPerc(), player->GetThrustRecharge());
     drawer->DrawText("arial.ttf", formattedString, 25, 20, 150);
 }
 
 void Asteroids::OnStart()
 {
-    ship = new Object( {640, 850}, {40, 40} );
+    player = new PlayerController();
 
     asteroids.push_back(CreateAsteroid( {200, 100} ));
     enemies.push_back(CreateEnemy( {640, 100} ));
@@ -73,11 +73,7 @@ void Asteroids::OnStart()
 
 void Asteroids::OnUpdate(const float deltaTime)
 {
-    fireDelayTimer += deltaTime;
-
-    UserInput(deltaTime);
-    UpdateThrust(deltaTime);
-    UpdateHoverEffect(deltaTime);
+    player->OnUpdate(deltaTime);
     UpdateTimedImages(deltaTime);
     CheckCollisions();
 
@@ -88,79 +84,24 @@ void Asteroids::OnUpdate(const float deltaTime)
     }
 }
 
-void Asteroids::UserInput(const float deltaTime)
-{
-    const Uint8* keyState = SDL_GetKeyboardState(NULL);
-    const Uint32 mouseState = SDL_GetMouseState(NULL, NULL);
-
-    if (keyState[SDL_SCANCODE_LSHIFT] && (thrustTimeTimer + deltaTime) <= thrustTime)
-    {
-        moveVelocity = thrustMoveVelocity;
-        thrustTimeTimer += deltaTime;
-    }
-    else
-        moveVelocity = normalMoveVelocity;    
-    if (keyState[SDL_SCANCODE_LEFT] || keyState[SDL_SCANCODE_KP_4] || keyState[SDL_SCANCODE_A])
-    {
-        if (ship->rect.position.x > 10)
-            ship->rect.position.x -= moveVelocity;
-    }
-    if (keyState[SDL_SCANCODE_RIGHT] || keyState[SDL_SCANCODE_KP_6] || keyState[SDL_SCANCODE_D])
-    {
-        if (ship->rect.position.x < 1270)
-            ship->rect.position.x += moveVelocity;
-    }
-    if (keyState[SDL_SCANCODE_UP] || keyState[SDL_SCANCODE_KP_8] || keyState[SDL_SCANCODE_W])
-    {
-        if (ship->rect.position.y > 10)
-            ship->rect.position.y -= moveVelocity;
-    }
-    if (keyState[SDL_SCANCODE_DOWN] || keyState[SDL_SCANCODE_KP_5] || keyState[SDL_SCANCODE_S])
-    {
-        if (ship->rect.position.y < 1014)
-            ship->rect.position.y += normalMoveVelocity;
-    }
-    if (keyState[SDL_SCANCODE_KP_7] || keyState[SDL_SCANCODE_Q])
-    {
-        // Rotate left.
-    }
-    if (keyState[SDL_SCANCODE_KP_9] || keyState[SDL_SCANCODE_E])
-    {
-        // Rotate right.
-    }
-    if (keyState[SDL_SCANCODE_SPACE] || keyState[SDL_SCANCODE_KP_0] || mouseState & SDL_BUTTON(SDL_BUTTON_LEFT))
-    {
-        Fire(deltaTime);
-    }
-}
-
-void Asteroids::Fire(const float deltaTime)
-{
-    if (fireDelayTimer >= fireDelay)
-    {
-        shots.push_back(CreateShot( {ship->rect.position.x, ship->rect.Top()} ));
-        fireDelayTimer = 0.0f;
-    }
-}
-
 void Asteroids::CheckCollisions()
 {
     // TODO: Refactor this
     for (Object& asteroid : asteroids)
     {
-        if (asteroid.IsColliding(*ship))
+        if (asteroid.IsColliding(*(player->ship)))
         {
             lives--;
-            ship->rect.position = Vector2Int { 640, 850 };
+            player->ship->rect.position = Vector2Int { 640, 850 };
         }
     }
 
     for (Object& enemy : enemies)
     {
-        if (enemy.IsColliding(*ship))
+        if (enemy.IsColliding(*(player->ship)))
         {
             lives--;
-            ship->rect.position = Vector2Int { 640, 850 };
+            player->ship->rect.position = Vector2Int { 640, 850 };
         }
     }
 
@@ -231,58 +172,6 @@ void Asteroids::CheckCollisions()
     }
 }
 
-// Checks if the player's thrust needs replenishing, if so, it is gradually replenished.
-void Asteroids::UpdateThrust(const float deltaTime)
-{
-    if (thrustTimeTimer > .0f && (thrustRechargeDelayTimer += deltaTime) >= thrustRechargeDelay)
-    {
-        if (thrustTimeTimer < prevThrustTime)
-        {
-            prevThrustTime = thrustTimeTimer;
-            thrustTimeTimer -= deltaTime * .25f;
-
-            if (thrustTimeTimer <= .0f)
-            {
-                thrustRechargeDelayTimer = .0f;
-                prevThrustTime = 1000.f;
-            }
-        }
-        else
-        {
-            thrustRechargeDelayTimer = .0f;
-            prevThrustTime = 1000.f;
-        }
-    }
-}
-
-// Sequentially moves the player's ship slightly in a square pattern.
-void Asteroids::UpdateHoverEffect(const float deltaTime)
-{
-    if ((hoverDirectionDelayTimer += deltaTime) >= hoverDirectionDelay)
-    {
-        switch (hoverDirection)
-        {
-            case 0:
-                ship->rect.position.x -= 2;
-                break;
-            case 1:
-                ship->rect.position.y -= 2;
-                break;
-            case 2:
-                ship->rect.position.x += 2;
-                break;
-            case 3:
-                ship->rect.position.y += 2;
-                break;
-        }
-
-        if ((hoverDirection++) > 3)
-            hoverDirection = 0;
-
-        hoverDirectionDelayTimer = .0f;
-    }
-}
-
 // Updates the life-time on the timedImages.
 // If image has run out of life-time, destroy it.
 void Asteroids::UpdateTimedImages(const float deltaTime)
@@ -319,11 +208,4 @@ Object Asteroids::CreateAsteroid(const Vector2Int& position)
     asteroid.health = 3;
 
     return asteroid;
-}
-
-Object Asteroids::CreateShot(const Vector2Int& position)
-{
-    Object shot(position, {15, 25});
-
-    return shot;
 }
