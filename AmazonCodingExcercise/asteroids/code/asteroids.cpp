@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 std::list<Object> Asteroids::shots = std::list<Object>();
+std::list<Object> Asteroids::enemyShots = std::list<Object>();
 
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
@@ -43,8 +44,10 @@ void Asteroids::DrawImages()
         drawer->DrawImage("asteroid.png", asteroid);
     for (Object& shot : shots)
         drawer->DrawImage("shot.png", shot);
-    for (Object& enemy : enemies)
-        drawer->DrawImage("ship_enemy.png", enemy);
+    for (Object& shot : enemyShots)
+        drawer->DrawImage("shot.png", shot);
+    for (AIController& enemy : enemies)
+        drawer->DrawImage("ship_enemy.png", *(enemy.ship));
     for (TimedImage& timedImage : timedImages)
         drawer->DrawImage(timedImage.imageName, timedImage.position);
 }
@@ -74,6 +77,10 @@ void Asteroids::OnStart()
 void Asteroids::OnUpdate(const float deltaTime)
 {
     player->OnUpdate(deltaTime);
+    
+    for (AIController& enemy : enemies)
+        enemy.OnUpdate(deltaTime);
+
     UpdateTimedImages(deltaTime);
     CheckCollisions();
 
@@ -90,19 +97,13 @@ void Asteroids::CheckCollisions()
     for (Object& asteroid : asteroids)
     {
         if (asteroid.IsColliding(*(player->ship)))
-        {
-            lives--;
-            player->ship->rect.position = Vector2Int { 640, 850 };
-        }
+            KillPlayer();
     }
 
-    for (Object& enemy : enemies)
+    for (AIController& enemy : enemies)
     {
-        if (enemy.IsColliding(*(player->ship)))
-        {
-            lives--;
-            player->ship->rect.position = Vector2Int { 640, 850 };
-        }
+        if (enemy.ship->IsColliding(*(player->ship)))
+            KillPlayer();
     }
 
     // Destroys shots that are out of range. Prevents memory issues.
@@ -110,6 +111,14 @@ void Asteroids::CheckCollisions()
     {
         if ((itr->rect.position.y--) <= INT_MIN)
             shots.erase(itr++);
+        else
+            ++itr;        
+    }
+
+    for (auto itr = enemyShots.begin(); itr != enemyShots.end();)
+    {
+        if ((itr->rect.position.y++) >= INT_MAX)
+            enemyShots.erase(itr++);
         else
             ++itr;        
     }
@@ -145,14 +154,14 @@ void Asteroids::CheckCollisions()
 
         for (auto itr = enemies.begin(); itr != enemies.end();)
         {
-            if (itr->IsColliding(*shotItr))
+            if (itr->ship->IsColliding(*shotItr))
             {
                 shots.erase(shotItr++);
                 shotDestroyed = true;
                 
-                if ((itr->health--) <= 1)
+                if ((itr->ship->health--) <= 1)
                 {
-                    CreateExplosion(itr->rect.position);
+                    CreateExplosion(itr->ship->rect.position);
                     enemies.erase(itr++);
                     score += 2;
                 }
@@ -163,6 +172,51 @@ void Asteroids::CheckCollisions()
             {
                 ++itr;
             }
+        }
+
+        if (shotDestroyed)
+            continue;
+
+        ++shotItr;
+    }
+
+    for (auto shotItr = enemyShots.begin(); shotItr != enemyShots.end();)
+    {
+        bool shotDestroyed = false;
+
+        for (auto itr = asteroids.begin(); itr != asteroids.end();)
+        {
+            if (itr->IsColliding(*shotItr))
+            {
+                enemyShots.erase(shotItr++);
+                shotDestroyed = true;
+
+                if ((itr->health--) <= 1)
+                {
+                    asteroids.erase(itr++);
+                    score++;
+                }
+                
+                break;
+            }
+            else
+            {
+                ++itr;
+            }
+        }
+
+        if (shotDestroyed)
+            continue;
+
+        if (shotItr->IsColliding(*(player->ship)))
+        {
+            enemyShots.erase(shotItr++);
+            shotDestroyed = true;
+            
+            if ((player->ship->health--) <= 1)
+                KillPlayer();
+
+            break;
         }
 
         if (shotDestroyed)
@@ -185,6 +239,14 @@ void Asteroids::UpdateTimedImages(const float deltaTime)
     }
 }
 
+void Asteroids::KillPlayer()
+{
+    lives--;
+    CreateExplosion(player->ship->rect.position);
+    player->ship->rect.position = Vector2Int { 640, 850 };
+    immunityTimeTimer = immunityTime;
+}
+
 // Chooses a random explosion image and adds it to the timedImages list.
 void Asteroids::CreateExplosion(const Vector2Int& position)
 {
@@ -194,12 +256,9 @@ void Asteroids::CreateExplosion(const Vector2Int& position)
     timedImages.push_back(TimedImage {formattedString, position, .25f});
 }
 
-Object Asteroids::CreateEnemy(const Vector2Int& position)
+AIController Asteroids::CreateEnemy(const Vector2Int& position)
 {
-    Object enemy(position, {40, 40}, 45.f);
-    enemy.health = 1;
-    
-    return enemy;
+    return AIController(position, 180);
 }
 
 Object Asteroids::CreateAsteroid(const Vector2Int& position)

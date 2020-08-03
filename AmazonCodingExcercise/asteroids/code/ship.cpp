@@ -1,27 +1,55 @@
 #include "ship.h"
-#include "asteroids.h"
 
 Ship::Ship(const Vector2Int& position, const float rotation) : Object(position, {40, 40}, rotation, true)
 {
     health = 1;
 }
 
-/*static*/ Object Ship::CreateShot(const Vector2Int& position)
+/*static*/ Object Ship::CreateShot(const Vector2Int& position, const float rotation)
 {
-    Object shot(position, {15, 25});
-
-    return shot;
+    return Object(position, {15, 25}, rotation);
 }
 
-Object& Ship::Fire()
+void Ship::OnUpdate(const float deltaTime)
 {
-    Asteroids::shots.push_back(CreateShot(rect.position));
-    
-    return Asteroids::shots.back();
+    UpdateHoverEffect(deltaTime);
+}
+
+Object Ship::Fire()
+{
+    return CreateShot(rect.position, rect.rotation);
 }
 
 void Ship::Move(const Vector2Int& moveBy)
 {
     rect.position.x += moveBy.x;
     rect.position.y += moveBy.y;
+}
+
+// Sequentially moves the player's ship slightly in a square pattern.
+void Ship::UpdateHoverEffect(const float deltaTime)
+{
+    if ((hoverDirectionDelayTimer += deltaTime) >= hoverDirectionDelay)
+    {
+        switch (hoverDirection)
+        {
+            case 0:
+                rect.position.x -= 2;
+                break;
+            case 1:
+                rect.position.y -= 2;
+                break;
+            case 2:
+                rect.position.x += 2;
+                break;
+            case 3:
+                rect.position.y += 2;
+                break;
+        }
+
+        if ((hoverDirection++) > 3)
+            hoverDirection = 0;
+
+        hoverDirectionDelayTimer = .0f;
+    }
 }

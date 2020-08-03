@@ -9,6 +9,7 @@
 #include "vector2int.h"
 #include "timed_image.h"
 #include "player_controller.h"
+#include "ai_controller.h"
 
 #include <list>
 
@@ -19,6 +20,7 @@ public:
     ~Asteroids();
     
     static std::list<Object> shots;
+    static std::list<Object> enemyShots;
 
     void Draw();
     void DrawImages();
@@ -29,9 +31,10 @@ public:
     
     void UpdateTimedImages(const float deltaTime);
     void CheckCollisions();
+    void KillPlayer();
 
     void CreateExplosion(const Vector2Int& position);
-    Object CreateEnemy(const Vector2Int& position);
+    AIController CreateEnemy(const Vector2Int& position);
     Object CreateAsteroid(const Vector2Int& position);
 
 private:
@@ -39,7 +42,7 @@ private:
 
     PlayerController* player;
     std::list<Object> asteroids;
-    std::list<Object> enemies;
+    std::list<AIController> enemies;
     std::list<TimedImage> timedImages;
 
     // Text labels.
@@ -52,4 +55,7 @@ private:
     const uint8_t maxLives = 3;
     int8_t lives = maxLives;
     uint16_t score = 0;
+
+    const float immunityTime = .25f;
+    float immunityTimeTimer = .0f;
 };

@@ -24,7 +24,7 @@ void PlayerController::OnUpdate(const float deltaTime)
 
     UserInput(deltaTime);
     UpdateThrust(deltaTime);
-    UpdateHoverEffect(deltaTime);
+    ship->OnUpdate(deltaTime);
 }
 
 void PlayerController::UserInput(const float deltaTime)
@@ -77,7 +77,7 @@ void PlayerController::Fire()
 {
     if (fireDelayTimer >= fireDelay)
     {
-        ship->Fire();
+        Asteroids::shots.push_back(ship->Fire());
         fireDelayTimer = 0.0f;
     }
 }
@@ -103,33 +103,5 @@ void PlayerController::UpdateThrust(const float deltaTime)
             thrustRechargeDelayTimer = .0f;
             prevThrustTime = 1000.f;
         }
-    }
-}
-
-// Sequentially moves the player's ship slightly in a square pattern.
-void PlayerController::UpdateHoverEffect(const float deltaTime)
-{
-    if ((hoverDirectionDelayTimer += deltaTime) >= hoverDirectionDelay)
-    {
-        switch (hoverDirection)
-        {
-            case 0:
-                ship->rect.position.x -= 2;
-                break;
-            case 1:
-                ship->rect.position.y -= 2;
-                break;
-            case 2:
-                ship->rect.position.x += 2;
-                break;
-            case 3:
-                ship->rect.position.y += 2;
-                break;
-        }
-
-        if ((hoverDirection++) > 3)
-            hoverDirection = 0;
-
-        hoverDirectionDelayTimer = .0f;
     }
 }

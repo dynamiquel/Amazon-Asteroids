@@ -10,6 +10,7 @@ class PlayerController
         Ship* ship;
 
         PlayerController();
+
         void OnUpdate(const float deltaTime);
         int GetThrustPerc();
         float GetThrustRecharge();
@@ -33,13 +34,7 @@ class PlayerController
         float thrustRechargeDelayTimer = .0f;
         float prevThrustTime = 1000.f;
 
-        // Hover effect.
-        uint8_t hoverDirection = 0; // Left, Top, Right, Bottom.
-        const float hoverDirectionDelay = .25f;
-        float hoverDirectionDelayTimer = .0f;
-
         void UserInput(const float deltaTime);
         void Fire();
         void UpdateThrust(const float deltaTime);
-        void UpdateHoverEffect(const float deltaTime);
 };
