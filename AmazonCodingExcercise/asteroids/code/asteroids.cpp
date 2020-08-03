@@ -76,6 +76,9 @@ void Asteroids::OnStart()
 
 void Asteroids::OnUpdate(const float deltaTime)
 {
+    // Reduces the immunity time the player has.
+    immunityTimeTimer -= deltaTime;
+
     player->OnUpdate(deltaTime);
     
     for (AIController& enemy : enemies)
@@ -93,17 +96,20 @@ void Asteroids::OnUpdate(const float deltaTime)
 
 void Asteroids::CheckCollisions()
 {
-    // TODO: Refactor this
-    for (Object& asteroid : asteroids)
+    // If player has no immunity left.
+    if (immunityTimeTimer <= 0)
     {
-        if (asteroid.IsColliding(*(player->ship)))
-            KillPlayer();
-    }
+        for (Object& asteroid : asteroids)
+        {
+            if (asteroid.IsColliding(*(player->ship)))
+                KillPlayer();
+        }
 
-    for (AIController& enemy : enemies)
-    {
-        if (enemy.ship->IsColliding(*(player->ship)))
-            KillPlayer();
+        for (AIController& enemy : enemies)
+        {
+            if (enemy.ship->IsColliding(*(player->ship)))
+                KillPlayer();
+        }
     }
 
     // Destroys shots that are out of range. Prevents memory issues.
@@ -208,7 +214,7 @@ void Asteroids::CheckCollisions()
         if (shotDestroyed)
             continue;
 
-        if (shotItr->IsColliding(*(player->ship)))
+        if (immunityTimeTimer <= 0 && shotItr->IsColliding(*(player->ship)))
         {
             enemyShots.erase(shotItr++);
             shotDestroyed = true;
@@ -244,6 +250,7 @@ void Asteroids::KillPlayer()
     lives--;
     CreateExplosion(player->ship->rect.position);
     player->ship->rect.position = Vector2Int { 640, 850 };
+    // Makes the player immune for a bit to prevent spawn killing.
     immunityTimeTimer = immunityTime;
 }
 

@@ -56,6 +56,6 @@ private:
     int8_t lives = maxLives;
     uint16_t score = 0;
 
-    const float immunityTime = .25f;
+    const float immunityTime = 1.f;
     float immunityTimeTimer = .0f;
 };
