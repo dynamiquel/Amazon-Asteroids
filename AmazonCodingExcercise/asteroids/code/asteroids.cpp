@@ -10,6 +10,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+std::list<Object> Asteroids::shots = std::list<Object>();
+
 /*static*/ Asteroids* Asteroids::Create(Drawer* drawer)
 {
     Asteroids* newAsteroids = new Asteroids();

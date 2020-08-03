@@ -9,6 +9,8 @@ set(OLD_GLOB
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/drawer.cpp"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/main.cpp"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/object.cpp"
+  "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/player_controller.cpp"
+  "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/ship.cpp"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/textures.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -22,6 +24,8 @@ set(OLD_GLOB
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/asteroids.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/drawer.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/object.h"
+  "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/player_controller.h"
+  "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/ship.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/textures.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/timed_image.h"
   "S:/Users/Liamk/Development/Games/AmazonCodingExcercise/AmazonCodingExcercise/asteroids/code/vector2int.h"

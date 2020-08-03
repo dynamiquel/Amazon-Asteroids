@@ -17,6 +17,8 @@ public:
     static Asteroids* Create(Drawer* drawer);
     ~Asteroids();
     
+    static std::list<Object> shots;
+
     void Draw();
     void DrawImages();
     void DrawText();
@@ -40,7 +42,6 @@ private:
     Drawer* drawer;
 
     Object* ship;
-    std::list<Object> shots;
     std::list<Object> asteroids;
     std::list<Object> enemies;
     std::list<TimedImage> timedImages;

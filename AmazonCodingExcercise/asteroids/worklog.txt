@@ -28,12 +28,14 @@ Day 1
    This method returns true if the two Rects in the Objects are overlapping.
 12. Increased window size to 1280x1024 (bg.png resolution).
 ====== 6 hours ======
+
 Day 2
 13. Added enemies.
 14. Shots that collide with asteroids and enemies are destroyed.
 15. When the player collides with an asteroid or enemy, they lose a life and are set back to spawn position.
 16. The player can no longer leave the window boundaries.
 ====== 2 hours ======
+
 Day 3
 17. Added Thrust. The amount of thrust is based on seconds using Asteroids.thurstTime.
     When some thrust is deplated, a countdown starts and when it finishes, the thrust slowly replenishes.
@@ -48,3 +50,4 @@ Day 3
     A struct called TimedImage is used to store the image name, position and lifetime.
 25. Renamed Drawer.DrawImageCached() to Drawer.DrawImage() and added float rotation to be a parameter.
     By using SDL_RenderCopyEx() instead of SDL_RenderCopy(), images can now be rotated.
+====== 4 hours ======
