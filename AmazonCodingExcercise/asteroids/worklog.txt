@@ -1,7 +1,6 @@
 [Add your work here and the estimate amount of time spent(remember that there is no hard time limit)]
-Time spent:
+Time spent: 13 hours
 
-Day 1
 1. Changed the SDL_Renderer from SDL_RENDERER_SOFTWARE to SDL_RENDERER_ACCELERATED.
 2. Changed SDL_Delay from 1 to 1000 / 200 (~200 fps) to make tick-based executions more consistent.
    I chose 200 fps as most computers should be able to handle it and it makes the game feel smooth on higher refresh rate monitors.
@@ -27,16 +26,10 @@ Day 1
 11. Replaced the existing collision detection with Object.IsColliding(Object&).
    This method returns true if the two Rects in the Objects are overlapping.
 12. Increased window size to 1280x1024 (bg.png resolution).
-====== 6 hours ======
-
-Day 2
 13. Added enemies.
 14. Shots that collide with asteroids and enemies are destroyed.
 15. When the player collides with an asteroid or enemy, they lose a life and are set back to spawn position.
 16. The player can no longer leave the window boundaries.
-====== 2 hours ======
-
-Day 3
 17. Added Thrust. The amount of thrust is based on seconds using Asteroids.thurstTime.
     When some thrust is deplated, a countdown starts and when it finishes, the thrust slowly replenishes.
     If thrust is used whiles it is replenishing, replenishing stops and the countdown starts again.
@@ -50,9 +43,6 @@ Day 3
     A struct called TimedImage is used to store the image name, position and lifetime.
 25. Renamed Drawer.DrawImageCached() to Drawer.DrawImage() and added float rotation to be a parameter.
     By using SDL_RenderCopyEx() instead of SDL_RenderCopy(), images can now be rotated.
-====== 4 hours ======
-
-Day 4
 26. Moved ship functionality into the Ship class. Ship inherits from Object with three additional methods: Move, Fire and UpdateHoverEffect.
 27. Moved ship controls (user input) into the PlayerController class. This class is responsible for controlling the Ships and listening to user input.
 28. Added basic AI by creating an AIController class. This class functions similarly to the PlayerController.
@@ -63,8 +53,6 @@ Day 4
 32. Enemy ships and asteroids spawn in a random X position. The spawn rate is chosen within a range. Spawn rate increases overtime to increase difficulty.
 33. The fire delay for enemy ships is chosen within a range for each shot. This should make the game less predictable.
 34. Using floats to represent position instead of integers as this can allow for smaller adjustments. Previously, the minimum speed was 200 pixels / second.
-====== 4 hours ======
-Day 5
 35. Added a new font called Nasa21.
 36. Added an introduction message telling the player what to do.
 37. When the player has no more lives, a game over screen is presented. It has the options to restart or exit the game.
