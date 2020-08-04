@@ -58,6 +58,7 @@ bool OnStart()
     return true;
 }
 
+// Called once per frame.
 void OnUpdate()
 {
     SDL_Event currentEvent;

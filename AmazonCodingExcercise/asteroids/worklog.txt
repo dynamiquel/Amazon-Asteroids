@@ -3,7 +3,7 @@ Time spent:
 
 Day 1
 1. Changed the SDL_Renderer from SDL_RENDERER_SOFTWARE to SDL_RENDERER_ACCELERATED.
-2. Changed SDL_Delay from 1 to 1000 / 200 (~200 fps) to make tick-based executions more consistent. 
+2. Changed SDL_Delay from 1 to 1000 / 200 (~200 fps) to make tick-based executions more consistent.
    I chose 200 fps as most computers should be able to handle it and it makes the game feel smooth on higher refresh rate monitors.
 3. Created a class called Textures, which contains a map of SDL_Textures.
 4. Added a method to replace Drawer.DrawImage() called Drawer.DrawImageCached().
@@ -12,7 +12,7 @@ Day 1
    This removes the memory leak and decreases CPU usage from ~14% to ~0.2%.
 5. Added more user input options, such as WASD and key pad as users will have preferences.
 6. Added a delay to firing using delta time. Delta time should make the firing delay not frame-rate dependent.
-7. Split up the Main class from one method to OnStart(), OnUpdate(), OnEnd(), OnExit() to simplify the execution process.
+7. Split up the Main class from one method to OnStart(), OnUpdate(), OnExit() to simplify the execution process.
 8. Added the ability to exit the app using the Close button.
 9. Created an Object class to replace Position in Asteroids.
    It contains basic info for in-game objects, such as position, size and rotation. It will also contain methods.
@@ -45,7 +45,7 @@ Day 3
 20. Fixed the memory leak and high CPU usage when drawing text. This was done by caching the font textures in Textures.
 21. The player's lives and thrust levels are displayed underneath the score.
 22. Score is gained when destroying enemies and asteroids. Asteroids = 1, Enemies = 2.
-23. Added health to enemies and asteroids.
+23. Added health to enemies and asteroids. Asteroids = 3, Enemies = 1.
 24. When an enemy ship is destroyed, a random explosion image from the given assets is displayed. 
     A struct called TimedImage is used to store the image name, position and lifetime.
 25. Renamed Drawer.DrawImageCached() to Drawer.DrawImage() and added float rotation to be a parameter.
@@ -57,9 +57,14 @@ Day 4
 27. Moved ship controls (user input) into the PlayerController class. This class is responsible for controlling the Ships and listening to user input.
 28. Added basic AI by creating an AIController class. This class functions similarly to the PlayerController.
 29. Added a new 'shots' list called 'enemyShots'. This list works similar to 'shots' but contains shots fired from enemy ships.
-    When these enemyShots hit the player's ship, the player loses a life.
+    When these enemyShots hit the player's ship, the player loses health. Currently, the player only has one health so this would be the same as losing a life.
 30. Short-term immunity is given to the player when they die. This prevents spawn-killing.
 31. Enemy ships that make it past the window are removed and the player loses a life.
 32. Enemy ships and asteroids spawn in a random X position. The spawn rate is chosen within a range. Spawn rate increases overtime to increase difficulty.
-33. The fire delay for enemy ships is chosen within a range for each shot. This should make the game feel less predictable.
-34. Using floats to represent position as this can allow for smaller adjustments. Previously, the minimum speed was 200 pixels / second.
+33. The fire delay for enemy ships is chosen within a range for each shot. This should make the game less predictable.
+34. Using floats to represent position instead of integers as this can allow for smaller adjustments. Previously, the minimum speed was 200 pixels / second.
+====== 4 hours ======
+Day 5
+35. Added a new font called Nasa21.
+36. Added an introduction message telling the player what to do.
+37. When the player has no more lives, a game over screen is presented. It has the options to restart or exit the game.

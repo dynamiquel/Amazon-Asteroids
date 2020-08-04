@@ -11,6 +11,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+// Initialise static variables.
 std::list<Object> Asteroids::shots = std::list<Object>();
 std::list<Object> Asteroids::enemyShots = std::list<Object>();
 
@@ -23,69 +24,84 @@ std::list<Object> Asteroids::enemyShots = std::list<Object>();
 
 Asteroids::~Asteroids()
 {
-    delete player;
-    shots.clear();
-    asteroids.clear();
-    enemies.clear();
-    timedImages.clear();
-}
-
-void Asteroids::Draw()
-{
-    DrawImages();
-    DrawText();
-}
-
-void Asteroids::DrawImages()
-{
-    drawer->DrawImage("bg.png", 0, 0, 0, false);
-    drawer->DrawImage("ship.png", *(player->ship));
-
-    for (Object& asteroid : asteroids)
-        drawer->DrawImage("asteroid.png", asteroid);
-    for (Object& shot : shots)
-        drawer->DrawImage("shot.png", shot);
-    for (Object& shot : enemyShots)
-        drawer->DrawImage("shot.png", shot);
-    for (AIController& enemy : enemies)
-        drawer->DrawImage("ship_enemy.png", *(enemy.ship));
-    for (TimedImage& timedImage : timedImages)
-        drawer->DrawImage(timedImage.imageName, timedImage.position);
-
-    if (lives <= 0)
-        drawer->DrawText("arial.ttf", "Game Over!", 80, 450, 400);
-}
-
-void Asteroids::DrawText()
-{
-    char formattedString[22];
-
-    sprintf(formattedString, scoreString, score);
-    drawer->DrawText("arial.ttf", formattedString, 40, 20, 50);
-
-    sprintf(formattedString, livesString, lives);
-    drawer->DrawText("arial.ttf", formattedString, 40, 20, 100);
-
-    sprintf(formattedString, thrustString, player->GetThrustPerc(), player->GetThrustRecharge());
-    drawer->DrawText("arial.ttf", formattedString, 25, 20, 150);
+    OnDestroy();
 }
 
 void Asteroids::OnStart()
 {
+    // Variables are initialised here as it allows the game
+    // to be restarted without creating a new object.
     player = new PlayerController();
+    lives = maxLives;
+    score = 0;
+    difficulty = 1.f;
+    immunityTimeTimer = .0f;
+    enemySpawnRateTimer = .0f;
+    startMessageTimer = 5.f;
 }
 
 // All OnUpdates = once per frame.
 void Asteroids::OnUpdate(const float deltaTime)
 {
-    if (lives <= 0)
+    if (lives < 0)
         return OnEnd();
 
+    // Reduces the life-span of the introduction message.
+    startMessageTimer -= deltaTime;
     // Reduces the immunity time the player has.
     immunityTimeTimer -= deltaTime;
 
     player->OnUpdate(deltaTime);
+    DestroyOutOfRangeObjects(deltaTime);
+    UpdateTimedImages(deltaTime);
+    CheckCollisions();
     
+    if ((enemySpawnRateTimer -= deltaTime) <= 0)
+        SpawnEnemy();
+}
+
+void Asteroids::OnEnd()
+{
+    const Uint8* keyState = SDL_GetKeyboardState(NULL);
+
+    if (keyState[SDL_SCANCODE_SPACE] || keyState[SDL_SCANCODE_E])
+        OnRestart();
+    else if (keyState[SDL_SCANCODE_ESCAPE])
+        Main::running = false;
+}
+
+void Asteroids::OnRestart()
+{
+    OnDestroy();
+    OnStart();
+}
+
+// Resets everything so the class can either be reused or deconstructed.
+void Asteroids::OnDestroy()
+{
+    delete player;
+    shots.clear();
+    enemyShots.clear();
+    asteroids.clear();
+    enemies.clear();
+    timedImages.clear();
+}
+
+// Updates the life-time on the timedImages.
+// If image has run out of life-time, destroy it.
+void Asteroids::UpdateTimedImages(const float deltaTime)
+{
+    for (auto itr = timedImages.begin(); itr != timedImages.end();)
+    {
+        if ((itr->lifeTime -= deltaTime) <= .0f)
+            timedImages.erase(itr++);
+        else
+            ++itr;
+    }
+}
+
+void Asteroids::DestroyOutOfRangeObjects(const float deltaTime)
+{
     for (auto itr = enemies.begin(); itr != enemies.end();)
     {
         itr->OnUpdate(deltaTime);
@@ -102,23 +118,20 @@ void Asteroids::OnUpdate(const float deltaTime)
 
     for (auto itr = asteroids.begin(); itr != asteroids.end();)
     {
+        // Moves the asteroid.
         itr->rect.position.y += 30.f * deltaTime;
-        // Destroys enemy ships that are out of range.
+        // Destroys asteroids that are out of range.
         if (itr->rect.position.y >= 1040)
         {
             asteroids.erase(itr++);
+            lives--;
         }
         else
             ++itr;
     }
-
-    UpdateTimedImages(deltaTime);
-    CheckCollisions();
-    
-    if ((enemySpawnRateTimer -= deltaTime) <= 0)
-        SpawnEnemy();
 }
 
+// Probably could be improved.
 void Asteroids::CheckCollisions()
 {
     // If player has no immunity left.
@@ -170,6 +183,7 @@ void Asteroids::CheckCollisions()
 
                 if ((itr->health--) <= 1)
                 {
+                    CreateExplosion(itr->rect.position, false);
                     asteroids.erase(itr++);
                     score++;
                 }
@@ -261,19 +275,6 @@ void Asteroids::CheckCollisions()
     }
 }
 
-// Updates the life-time on the timedImages.
-// If image has run out of life-time, destroy it.
-void Asteroids::UpdateTimedImages(const float deltaTime)
-{
-    for (auto itr = timedImages.begin(); itr != timedImages.end();)
-    {
-        if ((itr->lifeTime -= deltaTime) <= .0f)
-            timedImages.erase(itr++);
-        else
-            ++itr;
-    }
-}
-
 void Asteroids::KillPlayer()
 {
     lives--;
@@ -308,17 +309,22 @@ void Asteroids::SpawnEnemy()
     difficulty *= 1.02f;
 }
 
-void Asteroids::OnEnd()
-{
-    
-}
-
 // Chooses a random explosion image and adds it to the timedImages list.
-void Asteroids::CreateExplosion(const Vector2& position)
+void Asteroids::CreateExplosion(const Vector2& position, const bool shipExplosion)
 {
-    int index = rand() % 9;
     char* formattedString = new char[19];
-    sprintf(formattedString, explosionImageString, index);
+
+    if (shipExplosion)
+    {
+        int index = rand() % 9;
+        sprintf(formattedString, shipExplosionImageString, index);
+    }
+    else
+    {
+        int index = rand() % 5 + 10;
+        sprintf(formattedString, explosionImageString, index);
+    }
+    
     timedImages.push_back(TimedImage {formattedString, position, .25f});
 }
 
@@ -333,4 +339,56 @@ Object Asteroids::CreateAsteroid(const Vector2& position)
     asteroid.health = 3;
 
     return asteroid;
+}
+
+void Asteroids::Draw()
+{
+    DrawImages();
+    DrawText();
+}
+
+void Asteroids::DrawImages()
+{
+    drawer->DrawImage("bg.png", 0, 0, 0, false);
+    drawer->DrawImage("ship.png", *(player->ship));
+
+    for (Object& asteroid : asteroids)
+        drawer->DrawImage("asteroid.png", asteroid);
+    for (Object& shot : shots)
+        drawer->DrawImage("shot.png", shot);
+    for (Object& shot : enemyShots)
+        drawer->DrawImage("shot.png", shot);
+    for (AIController& enemy : enemies)
+        drawer->DrawImage("ship_enemy.png", *(enemy.ship));
+    for (TimedImage& timedImage : timedImages)
+        drawer->DrawImage(timedImage.imageName, timedImage.position);
+}
+
+void Asteroids::DrawText()
+{
+    char formattedString[22];
+
+    sprintf(formattedString, scoreString, score);
+    drawer->DrawText("Nasa21.ttf", formattedString, 40, 20, 50);
+
+    sprintf(formattedString, thrustString, player->GetThrustPerc(), player->GetThrustRecharge());
+    drawer->DrawText("Nasa21.ttf", formattedString, 25, 20, 150);
+
+    if (lives < 0)
+    {
+        drawer->DrawText("Nasa21.ttf", "Game Over!", 80, 480, 400);
+        drawer->DrawText("Nasa21.ttf", "PRESS [SPACE] TO RESTART", 35, 465, 450);
+        drawer->DrawText("Nasa21.ttf", "OR [ESC] IF YOU WANT TO GIVE UP :)", 25, 480, 480);
+        // If the player is dead, draw "DEAD" instead of the lives.
+        sprintf(formattedString, "DEAD");
+    }
+    else
+    {
+        // If the player has lives, draw them.
+        sprintf(formattedString, livesString, lives);
+    }
+    drawer->DrawText("Nasa21.ttf", formattedString, 40, 20, 100);
+
+    if (startMessageTimer > 0)
+        drawer->DrawText("Nasa21.ttf", "Don't let ANYTHING pass!", 60, 400, 200);
 }
